@@ -2,11 +2,9 @@
 #define USER_MAIN_H
 
 #include "commandParser.hpp"
+#include "clientState.hpp"
+#include "networkClient.hpp"
 
-#define IP_FLAG "-n"
-#define PORT_FLAG "-p"
-
-#define DEFAULT_IP "127.0.0.1"
-#define DEFAULT_PORT 58000
+#include "constants.hpp"
 
 #endif // MAIN_H

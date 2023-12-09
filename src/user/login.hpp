@@ -4,20 +4,26 @@
 #include "command.hpp"
 #include <string>
 
-#define LOGIN_COMMAND "login"
+#include "../common/common.hpp"
+
+#include "constants.hpp"
 
 using namespace std;
 
 // Derived class for Login
 class Login : public Command {
-private:
-    string user;
-    string password;
+    private:
+        string user;
+        string password;
 
-public:
-    Login(string user, string password);
-    void send() override;
-    string getCommand() override;
+    public:
+        Login(string user, string password) 
+            : Command(UDP, LOGIN), user(user), password(password) {};
+        
+        void send() override;
+        void receive() override;
+
+        string formatData() override;
 };
 
 #endif

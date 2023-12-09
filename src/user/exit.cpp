@@ -4,9 +4,11 @@
 using namespace std;
 
 void Exit::send() {
-    printf("Exit command sent\n");
 }
 
-string Exit::getCommand() {
-    return EXIT_COMMAND;
+void Exit::receive() {
+}
+
+string Exit::formatData() {
+    return "";
 }

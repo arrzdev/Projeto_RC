@@ -2,6 +2,14 @@
 #define USER_COMMAND_H
 
 #include "../common/common.hpp"
+#include "clientState.hpp"
+
+#include "networkClient.hpp"
+#include "udpClient.hpp"
+
+#include "constants.hpp"
+
+#include <memory>
 
 using namespace std;
 
@@ -11,12 +19,45 @@ using namespace std;
  * default tells the compiler to use the default implementation
 */
 class Command {
-public:
-    virtual ~Command() = default;
+    protected:
+        ClientState* clientState;
+        unique_ptr<NetworkClient> networkClient;
 
-    virtual void send() = 0;
+        /** 
+         *0: UDP
+        *1: TCP
+        */
+        int networkType;
 
-    virtual string getCommand() = 0;
+        string command;
+
+    public:
+        Command(string command) 
+            : command(command) {}
+
+        Command(int networkType, string command) 
+            : networkType(networkType), command(command) {}
+
+        virtual ~Command() = default;
+
+        // sends data to Auction Server
+        virtual void send() = 0;
+
+        // receives data from Auction Server
+        virtual void receive() = 0;
+
+        // Executes command
+        void execute();
+
+        // returns local command used
+        string getCommand();
+
+        // returns formatted string of data to send to auction server
+        virtual string formatData() = 0;
+
+        void setClientState(ClientState* clientState);
+
+        void setNetworkClient(string serverIp, int serverPort);
 };
 
 #endif

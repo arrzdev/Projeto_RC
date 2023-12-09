@@ -10,6 +10,8 @@
 #include "logout.hpp"
 #include "exit.hpp"
 
+#include "constants.hpp"
+
 using namespace std;
 
 

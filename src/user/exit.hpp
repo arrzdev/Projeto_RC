@@ -4,15 +4,18 @@
 #include "command.hpp"
 #include <string>
 
-#define EXIT_COMMAND "exit"
+#include "constants.hpp"
 
 using namespace std;
 
-// Derived class for Login
 class Exit : public Command {
-public:
-    void send() override;
-    string getCommand() override;
+    public:
+        Exit() : Command(EXIT) {};
+
+        void send() override;
+        void receive() override;
+
+        string formatData() override;
 };
 
 #endif

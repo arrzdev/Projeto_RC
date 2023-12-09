@@ -1,29 +1,18 @@
-#ifndef USER_UDP_HPP
-#define USER_UDP_HPP
+#ifndef USER_UDP_CLIENT_H
+#define USER_UDP_CLIENT_H
 
-#include <string>
-
-#include <sys/types.h> 
-#include <sys/socket.h> 
-#include <arpa/inet.h> 
-#include <netinet/in.h> 
-#include <unistd.h>
+#include "networkClient.hpp"
 
 using namespace std;
 
-class UdpClient {
+class UdpClient : public NetworkClient {
     public:
         UdpClient(string ip, int port);
-        ~UdpClient();
-        bool sendData(const string& data);
+        int sendData(const string& data);
         string receiveData();
 
     private:
-        int sockfd;
-        string serverIP;
-        int serverPort;
-
-        struct sockaddr_in serverAddr;
-    };
+        int type = UDP;
+};
 
 #endif

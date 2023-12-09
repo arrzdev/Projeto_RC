@@ -27,6 +27,32 @@ UdpClient::UdpClient(string ip, int port) {
     //TODO handle error
 }
 
-UdpClient::~UdpClient() {
-    close(this->sockfd);
+int UdpClient::sendData(const string& data) {
+    // Add \n to the end of the string
+    string dataToSend = data + "\n";
+
+    int n = sendto(this->sockfd, dataToSend.c_str(), dataToSend.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
+
+    //TODO handle error
+    if(n < 0) {
+        printf("Error sending data\n");
+        return -1;
+    }
+
+    return n;
+}
+
+string UdpClient::receiveData() {
+    char buffer[1024];
+    socklen_t len = sizeof(this->serverAddr);
+    int n = recvfrom(this->sockfd, buffer, 1024, 0, (struct sockaddr*) &this->serverAddr, &len);
+
+    //TODO handle error
+    if(n < 0) {
+        printf("Error receiving data\n");
+        return "";
+    }
+
+    buffer[n] = '\0';
+    return string(buffer);
 }

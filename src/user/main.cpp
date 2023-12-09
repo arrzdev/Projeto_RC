@@ -22,6 +22,8 @@ int main(int argc, char** argv) {
 
     printf("Connecting to %s:%d\n", serverIP.c_str(), serverPort);
 
+    ClientState clientState = ClientState();
+
     bool isExit = false;
 
     while(!isExit) {
@@ -31,17 +33,26 @@ int main(int argc, char** argv) {
 
         Command* command = CommandParser::parseCommand(input);
 
-        if (command != nullptr) {
-            command->send();
-            
-            if (command->getCommand() == EXIT_COMMAND) {
-                isExit = true;
-            }
-
-            delete command;
-        } else {
-            cout << "Invalid command" << endl;
+        if(command == nullptr) {
+            printf("Invalid command\n");
+            continue;
         }
+
+        printf("command: %s \n", command->getCommand().c_str());
+
+        command->setNetworkClient(serverIP, serverPort);
+
+        command->setClientState(&clientState);
+
+        command->execute();
+
+        printf("%s \n", command->getCommand().c_str());
+
+        if(command->getCommand() == EXIT) {
+            isExit = true;
+        }
+
+        delete command;
     }   
 
     return 0;

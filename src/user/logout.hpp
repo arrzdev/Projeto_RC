@@ -3,15 +3,21 @@
 
 #include "command.hpp"
 
-#define LOGOUT_COMMAND "logout"
+#include <string>
+
+#include "constants.hpp"
 
 using namespace std;
 
 // Derived class for Logout
 class Logout : public Command {
-public:
-    void send() override;
-    string getCommand() override;
+    public:
+        Logout() : Command(UDP, LOGIN) {};
+
+        void send() override;
+        void receive() override;
+
+        string formatData() override;
 };
 
 #endif // LOGOUT_H

@@ -2,9 +2,11 @@
 #include <iostream>
 
 void Logout::send() {
-    printf("Logout command sent\n");
 }
 
-string Logout::getCommand() {
-    return LOGOUT_COMMAND;
+void Logout::receive() {
+}
+
+string Logout::formatData() {
+    return string(UDP_LOGOUT_COMMAND) + " " + this->clientState->getUser() + " " + this->clientState->getPassword() + "\n";
 }
