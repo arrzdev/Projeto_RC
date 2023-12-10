@@ -1,12 +1,12 @@
-#include "logout.hpp"
+#include "unregister.hpp"
 
-void Logout::send() {
+void Unregister::send(){
     string dataToSend = this->formatData();
 
     this->networkClient->sendData(dataToSend);
 }
 
-void Logout::receive() {
+void Unregister::receive(){
     string dataReceived = this->networkClient->receiveData();
 
     Parser parser = Parser(dataReceived);
@@ -14,7 +14,7 @@ void Logout::receive() {
     string command = parser.getCommand();
     vector<string> args = parser.getArgs();
 
-    if(command != UDP_LOGOUT_RESPONSE || args.size() != 1) {
+    if(command != UDP_UNREGISTER_RESPONSE || args.size() != 1) {
         // TODO: handle error
     }
 
@@ -23,15 +23,15 @@ void Logout::receive() {
     if(status == STATUS_OK) {
         this->clientState->logoutUser();
 
-        printf("%s\n", string(LOGOUT_SUCCESS).c_str());
+        printf("%s\n", string(UNREGISTER_SUCCESS).c_str());
     }
 
     else if(status == STATUS_NOK) {
-        printf("%s\n", string(LOGOUT_FAILURE).c_str());
+        printf("%s\n", string(UNREGISTER_FAILURE).c_str());
     }
 
     else if(status == STATUS_UNREGISTERD) {
-        printf("%s\n", string(LOGOUT_UNREGISTER).c_str());
+        printf("%s\n", string(UNREGISTER_UNREGISTER).c_str());
     }
     
     else {
@@ -39,7 +39,7 @@ void Logout::receive() {
     }
 }
 
-// returns LOU <user> <password>\n
-string Logout::formatData() {
-    return string(UDP_LOGOUT_COMMAND) + " " + this->clientState->getUser() + " " + this->clientState->getPassword() + "\n";
+// returns UNR <username> <password>\n
+string Unregister::formatData() {
+    return string(UDP_UNREGISTER_COMMAND) + " " + this->clientState->getUser() + " " + this->clientState->getPassword() + "\n";
 }

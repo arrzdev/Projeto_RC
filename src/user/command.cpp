@@ -18,6 +18,7 @@ void Command::setNetworkClient(string serverIp, int serverPort) {
 }
 
 void Command::execute() {
+    printf("Command executed\n");
     this->send();
     this->receive();
 }

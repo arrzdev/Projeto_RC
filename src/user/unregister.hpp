@@ -1,18 +1,18 @@
-#ifndef USER_EXIT_H
-#define USER_EXIT_H
+#ifndef USER_UNREGISTER_H
+#define USER_UNREGISTER_H
 
 #include "command.hpp"
+
 #include <string>
 
 #include "constants.hpp"
 
 using namespace std;
 
-class Exit : public Command {
+// Derived class for Unregister
+class Unregister : public Command {
     public:
-        Exit() : Command(EXIT) {};
-
-        void execute() override;
+        Unregister() : Command(UDP, UNREGISTER) {};
 
         void send() override;
         void receive() override;
@@ -20,4 +20,4 @@ class Exit : public Command {
         string formatData() override;
 };
 
-#endif
+#endif // UNREGISTER_H

@@ -47,7 +47,7 @@ class Command {
         virtual void receive() = 0;
 
         // Executes command
-        void execute();
+        virtual void execute();
 
         // returns local command used
         string getCommand();

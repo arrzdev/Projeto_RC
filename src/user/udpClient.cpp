@@ -31,6 +31,8 @@ int UdpClient::sendData(const string& data) {
     // Add \n to the end of the string
     string dataToSend = data + "\n";
 
+    printf("Sending data: %s\n", dataToSend.c_str());
+
     int n = sendto(this->sockfd, dataToSend.c_str(), dataToSend.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
 
     //TODO handle error
@@ -53,6 +55,8 @@ string UdpClient::receiveData() {
         return "";
     }
 
-    buffer[n] = '\0';
+    printf("Received data: %s\n", buffer);
+
+    buffer[n] = '\0'; // sugested by copilot
     return string(buffer);
 }
