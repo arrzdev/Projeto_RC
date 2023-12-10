@@ -2,13 +2,14 @@
 
 using namespace std;
 
-void Exit::execute() {
+int Exit::execute() {
     if(this->clientState->canExit()) {
         printf("Exiting...\n");
+        return 1;
     }
-
     else {
         printf("You have to log out first\n");
+        return 0;
     }
 }
 

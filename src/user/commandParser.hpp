@@ -6,9 +6,8 @@
 #include "string.h"
 
 #include "command.hpp"
-#include "login.hpp"
-#include "logout.hpp"
-#include "exit.hpp"
+
+#include "commandFactory.hpp"
 
 #include "constants.hpp"
 

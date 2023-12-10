@@ -38,17 +38,13 @@ int main(int argc, char** argv) {
             continue;
         }
 
-        printf("command: %s \n", command->getCommand().c_str());
-
         command->setNetworkClient(serverIP, serverPort);
 
         command->setClientState(&clientState);
 
-        command->execute();
+        int exit = command->execute();
 
-        printf("%s \n", command->getCommand().c_str());
-
-        if(command->getCommand() == EXIT) {
+        if(exit) {
             isExit = true;
         }
 

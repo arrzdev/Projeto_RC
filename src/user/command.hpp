@@ -6,6 +6,7 @@
 
 #include "networkClient.hpp"
 #include "udpClient.hpp"
+#include "tcpClient.hpp"
 
 #include "constants.hpp"
 
@@ -23,10 +24,6 @@ class Command {
         ClientState* clientState;
         unique_ptr<NetworkClient> networkClient;
 
-        /** 
-         *0: UDP
-        *1: TCP
-        */
         int networkType;
 
         string command;
@@ -47,7 +44,7 @@ class Command {
         virtual void receive() = 0;
 
         // Executes command
-        virtual void execute();
+        virtual int execute();
 
         // returns local command used
         string getCommand();

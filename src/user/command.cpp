@@ -14,13 +14,16 @@ void Command::setNetworkClient(string serverIp, int serverPort) {
     }
 
     else if(networkType == TCP) {
+        this->networkClient = make_unique<TcpClient>(serverIp, serverPort);
     }
 }
 
-void Command::execute() {
-    printf("Command executed\n");
+// Only returns 1 if the command can exit
+int Command::execute() {
     this->send();
     this->receive();
+
+    return 0;
 }
 
 string Command::getCommand() {

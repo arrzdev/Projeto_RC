@@ -6,12 +6,19 @@
 
 using namespace std;
 
+struct Auction {
+    string id;
+    int isOpen;
+};
+
 class Parser {
     public:
         Parser(string input);
         string getCommand();
         vector<string> getArgs();
         string getInput();
+
+        vector<Auction> parseAuctions();
 
     private:
         string input;

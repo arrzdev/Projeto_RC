@@ -1,18 +1,18 @@
-#ifndef USER_EXIT_H
-#define USER_EXIT_H
+#ifndef USER_MYAUCTIONS_H
+#define USER_MYAUCTIONS_H
 
 #include "command.hpp"
+
 #include <string>
 
 #include "constants.hpp"
 
 using namespace std;
 
-class Exit : public Command {
+// Derived class for Unregister
+class MyAuctions : public Command {
     public:
-        Exit() : Command(EXIT) {};
-
-        int execute() override;
+        MyAuctions() : Command(UDP, MY_AUCTIONS) {};
 
         void send() override;
         void receive() override;
@@ -20,4 +20,4 @@ class Exit : public Command {
         string formatData() override;
 };
 
-#endif
+#endif // MYAUCTIONS_H

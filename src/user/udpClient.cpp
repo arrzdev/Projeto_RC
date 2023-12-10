@@ -28,12 +28,9 @@ UdpClient::UdpClient(string ip, int port) {
 }
 
 int UdpClient::sendData(const string& data) {
-    // Add \n to the end of the string
-    string dataToSend = data + "\n";
+    printf("Sending data: %s", data.c_str());
 
-    printf("Sending data: %s\n", dataToSend.c_str());
-
-    int n = sendto(this->sockfd, dataToSend.c_str(), dataToSend.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
+    int n = sendto(this->sockfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
 
     //TODO handle error
     if(n < 0) {
@@ -55,8 +52,12 @@ string UdpClient::receiveData() {
         return "";
     }
 
-    printf("Received data: %s\n", buffer);
+    // Set to n-1 because of the \n
+    buffer[n-1] = '\0'; // sugested by copilotint
 
-    buffer[n] = '\0'; // sugested by copilot
-    return string(buffer);
+    string dataReceived = string(buffer);
+
+    printf("Received data: %s\n", dataReceived.c_str());
+
+    return dataReceived;
 }

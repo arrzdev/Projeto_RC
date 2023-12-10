@@ -38,3 +38,20 @@ vector<string> Parser::getArgs() {
 string Parser::getInput() {
     return this->input;
 }
+
+vector<Auction> Parser::parseAuctions() {
+    vector<Auction> auctions;
+
+    int auctionsCount = this->args.size() / 2;
+
+    for(int i = 0; i < auctionsCount; i++) {
+        Auction auction;
+
+        auction.id = this->args[i * 2];
+        auction.isOpen = stoi(this->args[i * 2 + 1]);
+
+        auctions.push_back(auction);
+    }
+    
+    return auctions;
+}
