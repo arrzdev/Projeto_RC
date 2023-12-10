@@ -9,6 +9,7 @@
 #include "exit.hpp"
 #include "unregister.hpp"
 #include "myauctions.hpp"
+#include "mybids.hpp"
 
 #include <string>
 #include <vector>
@@ -23,6 +24,7 @@ private:
     static Command* createExit(vector<string> args);
     static Command* createUnregister(vector<string> args);
     static Command* createMyAuctions(vector<string> args);
+    static Command* createMyBids(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H

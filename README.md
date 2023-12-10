@@ -11,7 +11,7 @@ To test the commands, run `./user -n 193.136.138.142 -p 58011`
 -   open (tcp) 🔴
 -   close (tcp) 🔴
 -   myauctions (udp) ✅
--   mybids (udp) 🔴
+-   mybids (udp) ✅
 -   list (udp) 🔴
 -   show_asset (tcp) 🔴
 -   bid (tcp) 🔴

@@ -16,6 +16,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == MY_AUCTIONS || command == MY_AUCTIONS_SHORT){
         return CommandFactory::createMyAuctions(arguments);
     }
+    else if(command == MY_BIDS || command == MY_BIDS_SHORT){
+        return CommandFactory::createMyBids(arguments);
+    }
     else {
         return nullptr;
     }
@@ -66,4 +69,13 @@ Command* CommandFactory::createMyAuctions(vector<string> arguments) {
     }
 
     return new MyAuctions();
+}
+
+Command* CommandFactory::createMyBids(vector<string> arguments) {
+    if(arguments.size() != 0) {
+        printf("Usage: mybids\n");
+        return nullptr;
+    }
+
+    return new MyBids();
 }

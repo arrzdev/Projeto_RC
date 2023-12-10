@@ -14,7 +14,7 @@ void MyAuctions::receive(){
     string command = parser.getCommand();
     vector<string> args = parser.getArgs();
 
-    if(command != UDP_MY_AUCTIONS_RESPONSE || args.size() != 1) {
+    if(command != UDP_MY_AUCTIONS_RESPONSE || args.size() < 1) {
         // TODO: handle error
     }
 
@@ -33,10 +33,10 @@ void MyAuctions::receive(){
         }
     }
     else if(status == STATUS_NOK) {
-        printf("No ongoing auctions\n");
+        printf("%s\n", MY_AUCTIONS_EMPTY);
     }
     else if(status == STATUS_NOT_LOGGED_IN) {
-        printf("You are not logged in\n");
+        printf("%s\n", MY_AUCTIONS_FAILURE);
     }
     else {
         //TODO: handle error

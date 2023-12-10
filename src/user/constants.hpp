@@ -37,12 +37,14 @@
 #define UDP_LOGIN_COMMAND "LIN"
 #define UDP_LOGOUT_COMMAND "LOU"
 #define UDP_UNREGISTER_COMMAND "UNR"
-#define UDP_MY_AUCTIONS_COMMAND "LMA"  
+#define UDP_MY_AUCTIONS_COMMAND "LMA"
+#define UDP_MY_BIDS_COMMAND "LMB"
 
 #define UDP_LOGIN_RESPONSE "RLI"
 #define UDP_LOGOUT_RESPONSE "RLO"
 #define UDP_UNREGISTER_RESPONSE "RUR"
 #define UDP_MY_AUCTIONS_RESPONSE "RMA"
+#define UDP_MY_BIDS_RESPONSE "RMB"
 
 #define LOGIN_SUCCESS "successfull login"
 #define LOGIN_FAILURE "incorrect login attempt"
@@ -55,5 +57,11 @@
 #define UNREGISTER_SUCCESS "successfull unregister"
 #define UNREGISTER_FAILURE "incorrect unregister attempt"
 #define UNREGISTER_UNREGISTER "unknown user"
+
+#define MY_AUCTIONS_EMPTY "no ongoing auctions"
+#define MY_AUCTIONS_FAILURE "user not logged in"
+
+#define MY_BIDS_EMPTY "no ongoing bids"
+#define MY_BIDS_FAILURE "user not logged in"
 
 #endif // USER_CONSTANTS_H
