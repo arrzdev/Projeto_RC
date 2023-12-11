@@ -24,9 +24,7 @@ int main(int argc, char** argv) {
 
     ClientState clientState = ClientState();
 
-    bool isExit = false;
-
-    while(!isExit) {
+    while(1) {
         string input;
 
         getline(cin, input);
@@ -44,11 +42,11 @@ int main(int argc, char** argv) {
 
         int exit = command->execute();
 
-        if(exit) {
-            isExit = true;
-        }
-
         delete command;
+
+        if(exit) {
+            break;
+        }
     }   
 
     return 0;

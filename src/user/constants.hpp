@@ -9,7 +9,11 @@
 #define DEFAULT_IP "127.0.0.1"
 #define DEFAULT_PORT 58000
 
-#define CHUNCKS 1024
+#define MAX_AUCTIONS 999
+#define AUCTION_SIZE 5 // AID status
+#define COMMAND_REPLY 3
+#define STATUS 3
+#define CHUNCKS COMMAND_REPLY + 1 + STATUS + AUCTION_SIZE*MAX_AUCTIONS + 1
 
 #define LOGIN "login"
 #define LOGOUT "logout"
