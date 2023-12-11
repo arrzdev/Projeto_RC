@@ -1,5 +1,5 @@
-#ifndef USER_LOGOUT_H
-#define USER_LOGOUT_H
+#ifndef USER_LIST_H
+#define USER_LIST_H
 
 #include "command.hpp"
 
@@ -9,9 +9,9 @@
 
 using namespace std;
 
-class Logout : public Command {
+class List : public Command {
     public:
-        Logout() : Command(UDP, LOGIN) {};
+        List() : Command(UDP, LIST) {};
 
         void send() override;
         void receive() override;

@@ -9,7 +9,6 @@
 
 using namespace std;
 
-// Derived class for Unregister
 class MyAuctions : public Command {
     public:
         MyAuctions() : Command(UDP, MY_AUCTIONS) {};

@@ -4,6 +4,7 @@
         "*.js": "javascript",
         "*.pl": "prolog",
         "string": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "socket": "cpp"
     }
 }

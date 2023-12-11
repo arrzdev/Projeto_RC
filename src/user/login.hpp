@@ -10,7 +10,6 @@
 
 using namespace std;
 
-// Derived class for Login
 class Login : public Command {
     private:
         string user;

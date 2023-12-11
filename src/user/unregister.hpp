@@ -9,7 +9,6 @@
 
 using namespace std;
 
-// Derived class for Unregister
 class Unregister : public Command {
     public:
         Unregister() : Command(UDP, UNREGISTER) {};

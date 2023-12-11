@@ -42,9 +42,9 @@ int UdpClient::sendData(const string& data) {
 }
 
 string UdpClient::receiveData() {
-    char buffer[1024];
+    char buffer[CHUNCKS];
     socklen_t len = sizeof(this->serverAddr);
-    int n = recvfrom(this->sockfd, buffer, 1024, 0, (struct sockaddr*) &this->serverAddr, &len);
+    int n = recvfrom(this->sockfd, buffer, CHUNCKS, 0, (struct sockaddr*) &this->serverAddr, &len);
 
     //TODO handle error
     if(n < 0) {

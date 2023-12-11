@@ -19,6 +19,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == MY_BIDS || command == MY_BIDS_SHORT){
         return CommandFactory::createMyBids(arguments);
     }
+    else if(command == LIST || command == LIST_SHORT){
+        return CommandFactory::createList(arguments);
+    }
     else {
         return nullptr;
     }
@@ -78,4 +81,13 @@ Command* CommandFactory::createMyBids(vector<string> arguments) {
     }
 
     return new MyBids();
+}
+
+Command* CommandFactory::createList(vector<string> arguments) {
+    if(arguments.size() != 0) {
+        printf("Usage: list\n");
+        return nullptr;
+    }
+
+    return new List();
 }

@@ -9,6 +9,8 @@
 #define DEFAULT_IP "127.0.0.1"
 #define DEFAULT_PORT 58000
 
+#define CHUNCKS 1024
+
 #define LOGIN "login"
 #define LOGOUT "logout"
 #define UNREGISTER "unregister"
@@ -39,12 +41,14 @@
 #define UDP_UNREGISTER_COMMAND "UNR"
 #define UDP_MY_AUCTIONS_COMMAND "LMA"
 #define UDP_MY_BIDS_COMMAND "LMB"
+#define UDP_LIST_COMMAND "LST"
 
 #define UDP_LOGIN_RESPONSE "RLI"
 #define UDP_LOGOUT_RESPONSE "RLO"
 #define UDP_UNREGISTER_RESPONSE "RUR"
 #define UDP_MY_AUCTIONS_RESPONSE "RMA"
 #define UDP_MY_BIDS_RESPONSE "RMB"
+#define UDP_LIST_RESPONSE "RLS"
 
 #define LOGIN_SUCCESS "successfull login"
 #define LOGIN_FAILURE "incorrect login attempt"
@@ -60,6 +64,8 @@
 
 #define MY_AUCTIONS_EMPTY "no ongoing auctions"
 #define MY_AUCTIONS_FAILURE "user not logged in"
+
+#define LIST_FAILURE "no auction was yet started"
 
 #define MY_BIDS_EMPTY "no ongoing bids"
 #define MY_BIDS_FAILURE "user not logged in"
