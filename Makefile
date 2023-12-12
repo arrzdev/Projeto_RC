@@ -20,6 +20,10 @@ SERVER_EXEC = ./server
 # Default target is to build the user and server executables but before clean
 all: clean $(USER_EXEC) $(SERVER_EXEC)
 
+user: clean $(USER_EXEC)
+
+server: clean $(SERVER_EXEC)
+
 # Rules for building user and server executables
 $(USER_EXEC):
 	$(CXX) $(CXXFLAGS) $(USER_SOURCES) $(COMMON_SOURCES) -o $(USER_EXEC)
