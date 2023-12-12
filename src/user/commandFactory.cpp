@@ -22,6 +22,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == LIST || command == LIST_SHORT){
         return CommandFactory::createList(arguments);
     }
+    else if(command == SHOW_RECORD || command == SHOW_RECORD_SHORT){
+        return CommandFactory::createShowRecord(arguments);
+    }
     else {
         return nullptr;
     }
@@ -90,4 +93,15 @@ Command* CommandFactory::createList(vector<string> arguments) {
     }
 
     return new List();
+}
+
+Command* CommandFactory::createShowRecord(vector<string> arguments) {
+    if(arguments.size() != 1) {
+        printf("Usage: showrecord\n");
+        return nullptr;
+    }
+
+    string auctionId = arguments[0];
+
+    return new ShowRecord(auctionId);
 }

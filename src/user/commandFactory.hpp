@@ -11,6 +11,7 @@
 #include "myauctions.hpp"
 #include "mybids.hpp"
 #include "list.hpp"
+#include "showrecord.hpp"
 
 #include <string>
 #include <vector>
@@ -27,6 +28,7 @@ private:
     static Command* createMyAuctions(vector<string> args);
     static Command* createMyBids(vector<string> args);
     static Command* createList(vector<string> args);
+    static Command* createShowRecord(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H

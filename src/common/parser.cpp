@@ -44,11 +44,17 @@ vector<Auction> Parser::parseAuctions() {
 
     int auctionsCount = this->args.size() / 2;
 
-    for(int i = 0; i < auctionsCount; i++) {
+    /**
+     * i starts at 1 because the first argument is the status
+     * to get id you need to do i * 2 - 1 (1, 3, 5, 7, ...)
+     * to get isOpen you need to do i * 2 (2, 4, 6, 8, ...)
+    */
+    
+    for(int i = 1; i < auctionsCount; i++) {
         Auction auction;
 
-        auction.id = this->args[i * 2];
-        auction.isOpen = stoi(this->args[i * 2 + 1]);
+        auction.id = this->args[i * 2 - 1];
+        auction.isOpen = stoi(this->args[i * 2]);
 
         auctions.push_back(auction);
     }

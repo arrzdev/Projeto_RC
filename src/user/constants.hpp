@@ -46,6 +46,7 @@
 #define UDP_MY_AUCTIONS_COMMAND "LMA"
 #define UDP_MY_BIDS_COMMAND "LMB"
 #define UDP_LIST_COMMAND "LST"
+#define UDP_SHOW_RECORD_COMMAND "SRC"
 
 #define UDP_LOGIN_RESPONSE "RLI"
 #define UDP_LOGOUT_RESPONSE "RLO"
@@ -53,6 +54,7 @@
 #define UDP_MY_AUCTIONS_RESPONSE "RMA"
 #define UDP_MY_BIDS_RESPONSE "RMB"
 #define UDP_LIST_RESPONSE "RLS"
+#define UDP_SHOW_RECORD_RESPONSE "RRC"
 
 #define LOGIN_SUCCESS "successfull login"
 #define LOGIN_FAILURE "incorrect login attempt"
