@@ -15,6 +15,7 @@ class TcpClient : public NetworkClient {
 
     private:
         int type = TCP;
+        bool verbose = TCP_VERBOSE;
 };
 
 #endif

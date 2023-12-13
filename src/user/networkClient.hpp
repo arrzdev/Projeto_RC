@@ -11,6 +11,8 @@
 
 #include "constants.hpp"
 
+#include "errors.hpp"
+
 using namespace std;
 
 // Class that works as Interface

@@ -28,7 +28,7 @@ UdpClient::UdpClient(string ip, int port) {
 }
 
 int UdpClient::sendData(const string& data) {
-    printf("Sending data: %s", data.c_str());
+    if(this->verbose) printf("Sending data: %s", data.c_str());
 
     int n = sendto(this->sockfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
 
@@ -42,14 +42,22 @@ int UdpClient::sendData(const string& data) {
 }
 
 string UdpClient::receiveData() {
+    struct timeval tv;
+    tv.tv_sec = CONNECTION_TIMEOUT;
+
+    if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
+        // TODO handle error
+    }
+
     char buffer[CHUNCKS];
     socklen_t len = sizeof(this->serverAddr);
     int n = recvfrom(this->sockfd, buffer, CHUNCKS, 0, (struct sockaddr*) &this->serverAddr, &len);
 
-    //TODO handle error
     if(n < 0) {
-        printf("Error receiving data\n");
-        return "";
+        if(tv.tv_sec == CONNECTION_TIMEOUT) {
+            throw ConnectionTimeoutError();
+        }
+        //TODO handle error
     }
 
     // Set to n-1 because of the \n
@@ -57,7 +65,7 @@ string UdpClient::receiveData() {
 
     string dataReceived = string(buffer);
 
-    printf("Received data: %s\n", dataReceived.c_str());
+    if(this->verbose) printf("Received data: %s\n", dataReceived.c_str());
 
     return dataReceived;
 }

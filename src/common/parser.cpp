@@ -39,6 +39,10 @@ string Parser::getInput() {
     return this->input;
 }
 
+/**
+ * Handles command of type [status, id, isOpen, id, isOpen, ...]
+ * @return vector<Auction> 
+ */
 vector<Auction> Parser::parseAuctions() {
     vector<Auction> auctions;
 
@@ -60,4 +64,49 @@ vector<Auction> Parser::parseAuctions() {
     }
     
     return auctions;
+}
+
+ShowRecordStruct Parser::parseShowRecord() {
+    ShowRecordStruct showRecord;
+
+    showRecord.hostId = this->args[1];
+    showRecord.auctionName = this->args[2];
+    showRecord.assetFrame = this->args[3];
+    showRecord.startValue = this->args[4];
+    showRecord.startDate = this->args[5];
+    showRecord.startTime = this->args[6];
+    showRecord.timeActive = this->args[7];
+
+    // Auction has no bids and has not ended
+    int index = 8;
+
+    if(this->args.size() == 8) {
+        return showRecord;
+    }
+
+    while(this->args[index] == "B") {
+        Bid bid;
+
+        bid.bidderId = this->args[index + 1];
+        bid.value = this->args[index + 2];
+        bid.date = this->args[index + 3];
+        bid.time = this->args[index + 4];
+        bid.timeSinceStart = this->args[index + 5];
+
+        showRecord.bids.push_back(bid);
+
+        index += 6;
+    }
+
+    if(this->args[index] == "E") {
+        End end;
+
+        end.date = this->args[index + 1];
+        end.time = this->args[index + 2];
+        end.duration = this->args[index + 3];
+
+        showRecord.end = end;
+    }
+
+    return showRecord;
 }

@@ -20,8 +20,17 @@ void Command::setNetworkClient(string serverIp, int serverPort) {
 
 // Only returns 1 if the command can exit
 int Command::execute() {
-    this->send();
-    this->receive();
+    try {
+        this->send();
+        this->receive();
+    }
+    catch(CostumError& e) {
+        printf("%s\n", e.what());
+    } 
+    //TODO check if here or in main to get more generic errors
+    catch(exception& e) {
+        printf("Unknown error: %s\n", e.what());
+    }
 
     return 0;
 }

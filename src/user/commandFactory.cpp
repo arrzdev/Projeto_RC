@@ -97,11 +97,23 @@ Command* CommandFactory::createList(vector<string> arguments) {
 
 Command* CommandFactory::createShowRecord(vector<string> arguments) {
     if(arguments.size() != 1) {
-        printf("Usage: showrecord\n");
+        printf("Usage: showrecord <id>\n");
         return nullptr;
     }
 
     string auctionId = arguments[0];
+
+    //TODO check if feature to add rest of characters is needed
+    /**
+     * if user types 1 add rest of characters to be 3 characters long
+     */
+
+    if(auctionId.size() == 1) {
+        auctionId = "00" + auctionId;
+    }
+    else if(auctionId.size() == 2) {
+        auctionId = "0" + auctionId;
+    }
 
     return new ShowRecord(auctionId);
 }

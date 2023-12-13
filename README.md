@@ -15,6 +15,6 @@ To test the commands, run `./user -n 193.136.138.142 -p 58011`
 -   list (udp) ✅
 -   show_asset (tcp) 🔴
 -   bid (tcp) 🔴
--   show_record (udp) 🔴
+-   show_record (udp) ✅
 
 ## Server Commands to implement

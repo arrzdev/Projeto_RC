@@ -13,6 +13,7 @@ class UdpClient : public NetworkClient {
 
     private:
         int type = UDP;
+        bool verbose = UDP_VERBOSE;
 };
 
 #endif

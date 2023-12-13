@@ -21,9 +21,27 @@ void ShowRecord::receive() {
     string status = args[0];
 
     if(status == STATUS_OK){
-        // check if all arguments arrived handle error
-        for(size_t i = 1; i < args.size(); i++){
-            cout << args[i] << endl;
+        ShowRecordStruct showRecord = parser.parseShowRecord();
+        printf("%s started auction at %s %s with initial value of %s\n", showRecord.hostId.c_str(), showRecord.startDate.c_str(), showRecord.startTime.c_str(), showRecord.startValue.c_str());
+        printf("Asset frame: %s\n", showRecord.assetFrame.c_str());
+        printf("Auction %s has %lu bids\n", this->auctionId.c_str(), showRecord.bids.size());
+
+        for(Bid bid : showRecord.bids) {
+            printf("Bidder %s: bid value %s at %s %s\n", bid.bidderId.c_str(), bid.value.c_str(), bid.date.c_str(), bid.time.c_str());
+        }
+
+        if(showRecord.hasEnded()) {
+            printf("Auction %s ended at %s %s\n", this->auctionId.c_str(), showRecord.end.date.c_str(), showRecord.end.time.c_str());
+            printf("Auction %s lasted %s seconds\n", this->auctionId.c_str(), showRecord.end.duration.c_str());
+
+            if(showRecord.hasBids()) {
+                string lastBid = showRecord.lastBid();
+                printf("Auction %s last bid was %s\n", this->auctionId.c_str(), lastBid.c_str());
+            }
+        } else {
+            printf("Auction %s is still active\n", this->auctionId.c_str());
+            printf("Auction %s has been active for %s seconds\n", this->auctionId.c_str(), showRecord.timeActive.c_str());
+        
         }
     }
     else if(status == STATUS_NOK){
