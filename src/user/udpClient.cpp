@@ -61,7 +61,7 @@ string UdpClient::receiveData() {
     }
 
     // Set to n-1 because of the \n
-    buffer[n-1] = '\0'; // sugested by copilotint
+    buffer[n-1] = '\0';
 
     string dataReceived = string(buffer);
 

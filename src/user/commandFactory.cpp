@@ -25,6 +25,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == SHOW_RECORD || command == SHOW_RECORD_SHORT){
         return CommandFactory::createShowRecord(arguments);
     }
+    else if(command == SHOW_ASSET || command == SHOW_ASSET_SHORT){
+        return CommandFactory::createShowAsset(arguments);
+    }
     else {
         return nullptr;
     }
@@ -32,7 +35,7 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
 
 Command* CommandFactory::createLogin(vector<string> arguments) {
     if(arguments.size() != 2) {
-        printf("Usage: login <user> <password>\n");
+        printf("Usage: login <uid> <password>\n");
         return nullptr;
     }
 
@@ -97,7 +100,7 @@ Command* CommandFactory::createList(vector<string> arguments) {
 
 Command* CommandFactory::createShowRecord(vector<string> arguments) {
     if(arguments.size() != 1) {
-        printf("Usage: showrecord <id>\n");
+        printf("Usage: showrecord <aid>\n");
         return nullptr;
     }
 
@@ -116,4 +119,27 @@ Command* CommandFactory::createShowRecord(vector<string> arguments) {
     }
 
     return new ShowRecord(auctionId);
+}
+
+Command* CommandFactory::createShowAsset(vector<string> arguments) {
+    if(arguments.size() != 1) {
+        printf("Usage: show_asset <aid>\n");
+        return nullptr;
+    }
+
+    string assetId = arguments[0];
+
+    //TODO check if feature to add rest of characters is needed
+    /**
+     * if user types 1 add rest of characters to be 3 characters long
+     */
+
+    if(assetId.size() == 1) {
+        assetId = "00" + assetId;
+    }
+    else if(assetId.size() == 2) {
+        assetId = "0" + assetId;
+    }
+
+    return new ShowAsset(assetId);
 }

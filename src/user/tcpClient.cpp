@@ -26,7 +26,7 @@ TcpClient::TcpClient(string ip, int port) {
 int TcpClient::sendData(const string &data) {
     printf("Sending data: %s", data.c_str());
 
-    int n = send(this->sockfd, data.c_str(), data.length(), 0);
+    int n = write(this->sockfd, data.c_str(), data.length());
 
     //TODO handle error
     if (n < 0) {
@@ -38,19 +38,33 @@ int TcpClient::sendData(const string &data) {
 }
 
 string TcpClient::receiveData() {
-    char buffer[1024];
-    int n = recv(this->sockfd, buffer, 1024, 0);
+    string dataReceived = "";
 
-    //TODO handle error
-    if (n < 0) {
-        printf("Error receiving data\n");
-        return "";
+    // n is the number of bytes read
+    int n = 1;
+
+    int totalBytes = 0;
+
+    while(n != 0) {
+        char buffer[CHUNCKS];
+        n = read(this->sockfd, buffer, sizeof(buffer));
+
+        //TODO handle error
+        if(n < 0) {
+            printf("Error receiving data\n");
+            return "";
+        }
+
+        totalBytes += n;
+
+        //TODO handle error
+        if(totalBytes > MAX_TCP_REPLY_SIZE) {
+            printf("Error receiving data\n");
+            return "";
+        }
+
+        dataReceived.append(buffer, n);
     }
-
-    // Set to n-1 because of the \n
-    buffer[n-1] = '\0'; // sugested by copilot
-
-    string dataReceived = string(buffer);
 
     printf("Received data: %s\n", dataReceived.c_str());
 

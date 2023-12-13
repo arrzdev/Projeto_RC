@@ -5,6 +5,8 @@
 #include <cstring>
 #include <iostream>
 
+#include "../common/common.hpp"
+
 using namespace std;
 
 class TcpClient : public NetworkClient {

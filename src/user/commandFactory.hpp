@@ -12,6 +12,7 @@
 #include "mybids.hpp"
 #include "list.hpp"
 #include "showrecord.hpp"
+#include "showasset.hpp"
 
 #include <string>
 #include <vector>
@@ -21,6 +22,7 @@ public:
     static Command* createCommand(string command, vector<string> args);
 
 private:
+    // UDP commands
     static Command* createLogin(vector<string> args);
     static Command* createLogout(vector<string> args);
     static Command* createExit(vector<string> args);
@@ -29,6 +31,9 @@ private:
     static Command* createMyBids(vector<string> args);
     static Command* createList(vector<string> args);
     static Command* createShowRecord(vector<string> args);
+
+    // TCP commands
+    static Command* createShowAsset(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H

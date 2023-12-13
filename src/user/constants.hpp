@@ -12,7 +12,7 @@
 #define UDP_VERBOSE false
 #define TCP_VERBOSE true
 
-#define CONNECTION_TIMEOUT 1 //TODO change to 5
+#define CONNECTION_TIMEOUT 5
 #define CONNECTION_TIMEOUT_MSG "Connection timed out"
 
 #define MAX_AUCTIONS 999
@@ -20,6 +20,10 @@
 #define COMMAND_REPLY 3
 #define STATUS 3
 #define CHUNCKS COMMAND_REPLY + 1 + STATUS + AUCTION_SIZE*MAX_AUCTIONS + 1
+
+
+#define MAX_FILE_SIZE 10*1024*1024 // 10MB = 10*1024*1024 Bytes
+#define MAX_TCP_REPLY_SIZE 7+24+1+8+1+MAX_FILE_SIZE+1 // RSA <status(3)> <filename(24)> <filesize(8)> <filedata>
 
 #define LOGIN "login"
 #define LOGOUT "logout"
@@ -61,6 +65,10 @@
 #define UDP_MY_BIDS_RESPONSE "RMB"
 #define UDP_LIST_RESPONSE "RLS"
 #define UDP_SHOW_RECORD_RESPONSE "RRC"
+
+#define TCP_SHOW_ASSET_COMMAND "SAS"
+
+#define TCP_SHOW_ASSET_RESPONSE "RSA"
 
 #define LOGIN_SUCCESS "successfull login"
 #define LOGIN_FAILURE "incorrect login attempt"
