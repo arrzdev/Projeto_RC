@@ -13,8 +13,6 @@ class Close : public Command {
         void receive();
         string formatData();
 
-        void saveFile(string fileName, vector<string>* fileData);
-
     private:
         string auctionId;
 };

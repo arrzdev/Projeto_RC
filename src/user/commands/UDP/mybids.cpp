@@ -33,9 +33,9 @@ void MyBids::receive() {
 
     if(status == STATUS_OK) {
         // Auctions has same format as Bids
-        vector<Auction> bids = parser.parseAuctions();
+        vector<IAuction> bids = parser.parseAuctions();
 
-        for (Auction bid : bids) {
+        for (IAuction bid : bids) {
             printf("%s %s\n", bid.id.c_str(), bid.isOpen ? "open" : "closed");
         }
     }

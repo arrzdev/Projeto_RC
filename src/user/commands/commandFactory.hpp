@@ -18,6 +18,7 @@
 #include "./TCP/showasset.hpp"
 #include "./TCP/open.hpp"
 #include "./TCP/close.hpp"
+#include "./TCP/bid.hpp"
 
 #include <string>
 #include <vector>
@@ -41,6 +42,7 @@ private:
     static Command* createShowAsset(vector<string> args);
     static Command* createOpen(vector<string> args);
     static Command* createClose(vector<string> args);
+    static Command* createBid(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H

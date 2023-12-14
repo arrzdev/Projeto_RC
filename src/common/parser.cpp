@@ -43,8 +43,8 @@ string Parser::getInput() {
  * Handles command of type [status, id, isOpen, id, isOpen, ...]
  * @return vector<Auction> 
  */
-vector<Auction> Parser::parseAuctions() {
-    vector<Auction> auctions;
+vector<IAuction> Parser::parseAuctions() {
+    vector<IAuction> auctions;
 
     int auctionsCount = this->args.size() / 2;
 
@@ -55,7 +55,7 @@ vector<Auction> Parser::parseAuctions() {
     */
     
     for(int i = 1; i <= auctionsCount; i++) {
-        Auction auction;
+        IAuction auction;
 
         auction.id = this->args[i * 2 - 1];
         auction.isOpen = stoi(this->args[i * 2]);
@@ -66,8 +66,8 @@ vector<Auction> Parser::parseAuctions() {
     return auctions;
 }
 
-ShowRecordStruct Parser::parseShowRecord() {
-    ShowRecordStruct showRecord;
+IShowRecord Parser::parseShowRecord() {
+    IShowRecord showRecord;
 
     showRecord.hostId = this->args[1];
     showRecord.auctionName = this->args[2];
@@ -85,7 +85,7 @@ ShowRecordStruct Parser::parseShowRecord() {
     }
 
     while(this->args[index] == "B") {
-        Bid bid;
+        IBid bid;
 
         bid.bidderId = this->args[index + 1];
         bid.value = this->args[index + 2];
@@ -99,7 +99,7 @@ ShowRecordStruct Parser::parseShowRecord() {
     }
 
     if(this->args[index] == "E") {
-        End end;
+        IEnd end;
 
         end.date = this->args[index + 1];
         end.time = this->args[index + 2];

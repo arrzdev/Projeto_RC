@@ -21,9 +21,9 @@ void List::receive() {
     string status = args[0];
 
     if(status == STATUS_OK) {
-        vector<Auction> auctions = parser.parseAuctions();
+        vector<IAuction> auctions = parser.parseAuctions();
 
-        for (Auction auction : auctions) {
+        for (IAuction auction : auctions) {
             printf("%s %s\n", auction.id.c_str(), auction.isOpen ? "open" : "closed");
         }
     }

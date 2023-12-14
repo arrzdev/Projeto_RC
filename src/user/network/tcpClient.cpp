@@ -38,6 +38,13 @@ int TcpClient::sendData(const string &data) {
 }
 
 string TcpClient::receiveData() {
+    struct timeval tv;
+    tv.tv_sec = CONNECTION_TIMEOUT;
+
+    if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
+        // TODO handle error
+    }
+
     string dataReceived = "";
 
     // n is the number of bytes read
@@ -51,6 +58,10 @@ string TcpClient::receiveData() {
 
         //TODO handle error
         if(n < 0) {
+            if(tv.tv_sec == CONNECTION_TIMEOUT) {
+                throw ConnectionTimeoutError();
+            }
+
             printf("Error receiving data\n");
             return "";
         }

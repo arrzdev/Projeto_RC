@@ -6,12 +6,12 @@
 
 using namespace std;
 
-struct Auction {
+struct IAuction {
     string id;
     int isOpen;
 };
 
-struct Bid {
+struct IBid {
     string bidderId;
     string value;
     string date;
@@ -20,13 +20,13 @@ struct Bid {
     string timeSinceStart; // seconds from start of auction until this bid
 };
 
-struct End {
+struct IEnd {
     string date;
     string time;
     string duration; // duration of auction in seconds
 };
 
-struct ShowRecordStruct {
+struct IShowRecord {
     string hostId;
     string auctionName;
     string assetFrame;
@@ -36,10 +36,10 @@ struct ShowRecordStruct {
     string timeActive; // seconds from start of auction until now
 
     // last 50 bids, from lowest value to highest
-    vector<Bid> bids; 
+    vector<IBid> bids; 
 
     // auction end date, time and duration
-    End end;
+    IEnd end;
 
     bool hasBids() {
         return this->bids.size() > 0;
@@ -64,9 +64,9 @@ class Parser {
         vector<string> getArgs();
         string getInput();
 
-        vector<Auction> parseAuctions();
+        vector<IAuction> parseAuctions();
 
-        ShowRecordStruct parseShowRecord();
+        IShowRecord parseShowRecord();
 
     private:
         string input;

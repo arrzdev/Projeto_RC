@@ -36,9 +36,9 @@ void MyAuctions::receive(){
         <auction_id> <0|1> <auction_id> <0|1> ...
         where 0 means the auction is closed and 1 means it is open
         */
-        vector<Auction> auctions = parser.parseAuctions();
+        vector<IAuction> auctions = parser.parseAuctions();
 
-        for (Auction auction : auctions) {
+        for (IAuction auction : auctions) {
             printf("%s %s\n", auction.id.c_str(), auction.isOpen ? "open" : "closed");
         }
     }

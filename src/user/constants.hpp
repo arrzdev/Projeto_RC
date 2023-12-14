@@ -52,6 +52,9 @@
 #define STATUS_NOT_FOUND "EAU"
 #define STATUS_NOT_OWNED "EOW"
 #define STATUS_ALREADY_CLOSED "END"
+#define STATUS_ACCEPTED "ACC"
+#define STATUS_REFUSED "REF"
+#define STATUS_ILLEGAL "ILG"
 
 #define UDP_LOGIN_COMMAND "LIN"
 #define UDP_LOGOUT_COMMAND "LOU"
@@ -72,10 +75,12 @@
 #define TCP_SHOW_ASSET_COMMAND "SAS"
 #define TCP_OPEN_COMMAND "OPA"
 #define TCP_CLOSE_COMMAND "CLS" 
+#define TCP_BID_COMMAND "BID"
 
 #define TCP_SHOW_ASSET_RESPONSE "RSA"
 #define TCP_OPEN_RESPONSE "ROA"
 #define TCP_CLOSE_RESPONSE "RCL"
+#define TCP_BID_RESPONSE "RBD"
 
 #define NOT_LOGGED_IN "user not logged in"
 #define USER_ALREADY_LOGGED_IN "user already logged in, please logout first"
@@ -110,5 +115,12 @@
 #define CLOSE_AUCTION_NOT_FOUND "auction not found"
 #define CLOSE_AUCTION_NOT_OWNED "auction not owned by user"
 #define CLOSE_ALREADY_CLOSED "auction already closed"
+
+#define BID_NOT_ACTIVE "auction not active"
+#define BID_NOT_LOGGED_IN "user not logged in"
+#define BID_ACCEPTED "bid accepted"
+#define BID_REFUSED "bid refused, value too low"
+#define BID_ILLEGAL "illegal bid, cant bid on own auction"
+
 
 #endif // USER_CONSTANTS_H
