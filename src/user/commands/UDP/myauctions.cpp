@@ -1,5 +1,15 @@
 #include "myauctions.hpp"
 
+int MyAuctions::execute() {
+    // check if user is logged in
+    if(!this->clientState->isLoggedIn()) {
+        printf("%s\n", string(NOT_LOGGED_IN).c_str());
+        return 0;
+    }
+    
+    return Command::execute();
+}
+
 void MyAuctions::send(){
     string dataToSend = this->formatData();
 

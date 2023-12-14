@@ -7,6 +7,8 @@ class Logout : public Command {
     public:
         Logout() : Command(UDP, LOGIN) {};
 
+        int execute() override;
+
         void send() override;
         void receive() override;
 

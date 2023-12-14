@@ -11,6 +11,8 @@ class Login : public Command {
     public:
         Login(string user, string password) 
             : Command(UDP, LOGIN), user(user), password(password) {};
+
+        int execute() override;
         
         void send() override;
         void receive() override;

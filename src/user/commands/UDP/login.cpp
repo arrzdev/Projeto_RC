@@ -1,6 +1,13 @@
 #include "login.hpp"
 
-using namespace std;
+int Login::execute() {
+    if(this->clientState->isLoggedIn()) {
+        printf("%s\n", string(USER_ALREADY_LOGGED_IN).c_str());
+        return 0;
+    }
+
+    return Command::execute();
+}
 
 void Login::send() {
     string dataToSend = this->formatData();

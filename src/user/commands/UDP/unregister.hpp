@@ -7,6 +7,8 @@ class Unregister : public Command {
     public:
         Unregister() : Command(UDP, UNREGISTER) {};
 
+        int execute() override;
+
         void send() override;
         void receive() override;
 

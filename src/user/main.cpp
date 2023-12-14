@@ -24,7 +24,11 @@ int main(int argc, char** argv) {
 
     ClientState clientState = ClientState();
 
-    while(1) {
+    int exit = 0;
+
+    while(exit) {
+        printf("\n> ");
+
         string input;
 
         getline(cin, input);
@@ -32,7 +36,6 @@ int main(int argc, char** argv) {
         Command* command = CommandParser::parseCommand(input);
 
         if(command == nullptr) {
-            printf("Invalid command\n");
             continue;
         }
 
@@ -40,13 +43,9 @@ int main(int argc, char** argv) {
 
         command->setClientState(&clientState);
 
-        int exit = command->execute();
+        exit = command->execute();
 
         delete command;
-
-        if(exit) {
-            break;
-        }
     }   
 
     return 0;

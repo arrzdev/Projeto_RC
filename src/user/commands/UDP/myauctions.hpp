@@ -7,6 +7,8 @@ class MyAuctions : public Command {
     public:
         MyAuctions() : Command(UDP, MY_AUCTIONS) {};
 
+        int execute() override;
+
         void send() override;
         void receive() override;
 

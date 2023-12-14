@@ -3,13 +3,13 @@
 using namespace std;
 
 int Exit::execute() {
-    if(this->clientState->canExit()) {
-        printf("Exiting...\n");
-        return 1;
-    }
-    else {
+    if(this->clientState->isLoggedIn()) {
         printf("You have to log out first\n");
         return 0;
+    }
+    else {
+        printf("Exiting...\n");
+        return 1;
     }
 }
 

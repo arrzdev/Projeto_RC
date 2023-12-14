@@ -28,7 +28,7 @@ void ClientState::setPassword(string password) {
     this->password = password;
 }
 
-// Checks if user and password are not defined (user not logged in)
-bool ClientState::canExit() {
-    return this->user.empty() && this->password.empty();
+// Checks if user is logged in by checking if user and password are not empty
+bool ClientState::isLoggedIn() {
+    return !(this->user.empty() && this->password.empty());
 }

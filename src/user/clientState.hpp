@@ -16,7 +16,7 @@ class ClientState {
         string getPassword();
         void setPassword(string password);
 
-        bool canExit();
+        bool isLoggedIn();
     private:
         string user;
         string password;

@@ -29,6 +29,7 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
         return CommandFactory::createShowAsset(arguments);
     }
     else {
+        printf("Invalid command\n");
         return nullptr;
     }
 }

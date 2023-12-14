@@ -70,6 +70,9 @@
 
 #define TCP_SHOW_ASSET_RESPONSE "RSA"
 
+#define NOT_LOGGED_IN "user not logged in"
+#define USER_ALREADY_LOGGED_IN "user already logged in, please logout first"
+
 #define LOGIN_SUCCESS "successfull login"
 #define LOGIN_FAILURE "incorrect login attempt"
 #define LOGIN_REGISTER "new user registered"

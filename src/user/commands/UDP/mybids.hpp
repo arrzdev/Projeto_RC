@@ -7,6 +7,8 @@ class MyBids : public Command {
     public:
         MyBids() : Command(UDP, MY_BIDS) {};
 
+        int execute() override;
+
         void send() override;
         void receive() override;
 

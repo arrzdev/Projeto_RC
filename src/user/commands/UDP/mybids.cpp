@@ -1,5 +1,15 @@
 #include "mybids.hpp"
 
+int MyBids::execute() {
+    // check if user is logged in
+    if(!this->clientState->isLoggedIn()) {
+        printf("%s\n", string(NOT_LOGGED_IN).c_str());
+        return 0;
+    }
+    
+    return Command::execute();
+}
+
 void MyBids::send() {
     string data = formatData();
 
