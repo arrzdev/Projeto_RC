@@ -24,7 +24,7 @@ TcpClient::TcpClient(string ip, int port) {
 }
 
 int TcpClient::sendData(const string &data) {
-    printf("Sending data: %s", data.c_str());
+    if(TCP_VERBOSE) printf("Sending data: %s", data.c_str());
 
     int n = write(this->sockfd, data.c_str(), data.length());
 
@@ -66,9 +66,9 @@ string TcpClient::receiveData() {
         dataReceived.append(buffer, n);
     }
 
-    dataReceived[totalBytes-1] = '\0';
+    dataReceived = dataReceived.substr(0, dataReceived.length() - 1);
 
-    printf("Received data: %s\n", dataReceived.c_str());
+    if(TCP_VERBOSE) printf("Received data: %s\n", dataReceived.c_str());
 
     return dataReceived;
 }

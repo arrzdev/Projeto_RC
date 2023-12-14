@@ -49,6 +49,9 @@
 #define STATUS_REGISTERD "REG"
 #define STATUS_UNREGISTERD "UNR"
 #define STATUS_NOT_LOGGED_IN "NLG"
+#define STATUS_NOT_FOUND "EAU"
+#define STATUS_NOT_OWNED "EOW"
+#define STATUS_ALREADY_CLOSED "END"
 
 #define UDP_LOGIN_COMMAND "LIN"
 #define UDP_LOGOUT_COMMAND "LOU"
@@ -68,9 +71,11 @@
 
 #define TCP_SHOW_ASSET_COMMAND "SAS"
 #define TCP_OPEN_COMMAND "OPA"
+#define TCP_CLOSE_COMMAND "CLS" 
 
 #define TCP_SHOW_ASSET_RESPONSE "RSA"
 #define TCP_OPEN_RESPONSE "ROA"
+#define TCP_CLOSE_RESPONSE "RCL"
 
 #define NOT_LOGGED_IN "user not logged in"
 #define USER_ALREADY_LOGGED_IN "user already logged in, please logout first"
@@ -98,5 +103,12 @@
 #define SHOW_ASSET_FAILURE "asset not found"
 
 #define OPEN_FAILURE "auction not started"
+
+#define CLOSE_SUCCESS "auction closed successfully"
+#define CLOSE_FAILURE "user or password incorrect"
+#define CLOSE_NOT_LOGGED_IN "user not logged in"
+#define CLOSE_AUCTION_NOT_FOUND "auction not found"
+#define CLOSE_AUCTION_NOT_OWNED "auction not owned by user"
+#define CLOSE_ALREADY_CLOSED "auction already closed"
 
 #endif // USER_CONSTANTS_H

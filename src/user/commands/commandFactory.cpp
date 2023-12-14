@@ -31,6 +31,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == OPEN){
         return CommandFactory::createOpen(arguments);
     }
+    else if(command == CLOSE){
+        return CommandFactory::createClose(arguments);
+    }
     else {
         printf("Invalid command\n");
         return nullptr;
@@ -160,4 +163,27 @@ Command* CommandFactory::createOpen(vector<string> arguments) {
     string timeactive = arguments[3];
 
     return new Open(name, startValue, timeactive, assetFileName);
+}
+
+Command* CommandFactory::createClose(vector<string> arguments) {
+    if(arguments.size() != 1) {
+        printf("Usage: close <aid>\n");
+        return nullptr;
+    }
+
+    string auctionId = arguments[0];
+
+    //TODO check if feature to add rest of characters is needed
+    /**
+     * if user types 1 add rest of characters to be 3 characters long
+     */
+
+    if(auctionId.size() == 1) {
+        auctionId = "00" + auctionId;
+    }
+    else if(auctionId.size() == 2) {
+        auctionId = "0" + auctionId;
+    }
+
+    return new Close(auctionId);
 }

@@ -17,6 +17,7 @@
 
 #include "./TCP/showasset.hpp"
 #include "./TCP/open.hpp"
+#include "./TCP/close.hpp"
 
 #include <string>
 #include <vector>
@@ -39,6 +40,7 @@ private:
     // TCP commands
     static Command* createShowAsset(vector<string> args);
     static Command* createOpen(vector<string> args);
+    static Command* createClose(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H
