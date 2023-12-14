@@ -4,9 +4,20 @@ string Fs::getPath() {
     return this->path;
 }
 
-bool Fs::open() {
+/**
+ * @param mode READ or WRITE
+ */
+bool Fs::open(int mode) {
     // Isto nao consegue abrir o ficheiro dentro de uma pasta
-    this->fd = ::open(this->path.c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);
+    if(mode == READ){
+        this->fd = ::open(this->path.c_str(), O_RDONLY, 0644);
+    }
+    else if(mode == WRITE){
+        this->fd = ::open(this->path.c_str(), O_WRONLY | O_CREAT, 0644);
+    }
+    else{
+        return false;
+    }
 
     if(this->fd < 0) {
         return false;
@@ -27,20 +38,6 @@ bool Fs::isOpen() {
     return this->fd != -1;
 }
 
-bool Fs::write(vector<string>* data) {
-    if(!open()) {
-        return false;
-    }
-
-    for(size_t i = 0; i < data->size(); i++) {
-        if(write(&data->at(i)) == false) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 bool Fs::write(string* data) {
     if(!isOpen()) {
         return false;
@@ -53,30 +50,45 @@ bool Fs::write(string* data) {
     return true;
 }
 
-// returns array of size (File size / chuncks_size) + 1
-bool Fs::read(vector<string>* data, size_t chuncks_size) {
-    //TODO done for server, check if this works
-    // Nao consegui testar
+int Fs::getSize() {
+    if(!isOpen()) {
+        return -1;
+    }
 
-    if(!open()) {
+    // set file pointer to beginning of file
+    lseek(this->fd, 0, SEEK_SET);
+
+    size_t size = lseek(this->fd, 0, SEEK_END);
+
+    // set file pointer to beginning of file
+    lseek(this->fd, 0, SEEK_SET);
+
+    return static_cast<int>(size);
+}
+
+bool Fs::read(string* data) {
+    if(!isOpen()) {
         return false;
     }
 
-    string buffer = string("", chuncks_size);
+    int size = getSize();
 
-    while(true) {
-        ssize_t bytes_read = ::read(this->fd, &buffer, chuncks_size);
-
-        if(bytes_read < 0) {
-            return false;
-        }
-
-        if(bytes_read == 0) {
-            break;
-        }
-
-        data->push_back(string(buffer, bytes_read));
+    if(size <= 0) {
+        return false;
     }
+
+    char buffer[size];
+
+    // set file pointer to beginning of file
+    lseek(this->fd, 0, SEEK_SET);
+
+    ssize_t bytesRead = ::read(this->fd, buffer, size);
+
+    if(bytesRead < 0) {
+        return false;
+    }
+
+    *data = string(buffer, bytesRead);
 
     return true;
 }

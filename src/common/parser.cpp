@@ -54,7 +54,7 @@ vector<Auction> Parser::parseAuctions() {
      * to get isOpen you need to do i * 2 (2, 4, 6, 8, ...)
     */
     
-    for(int i = 1; i < auctionsCount; i++) {
+    for(int i = 1; i <= auctionsCount; i++) {
         Auction auction;
 
         auction.id = this->args[i * 2 - 1];

@@ -66,6 +66,8 @@ string TcpClient::receiveData() {
         dataReceived.append(buffer, n);
     }
 
+    dataReceived[totalBytes-1] = '\0';
+
     printf("Received data: %s\n", dataReceived.c_str());
 
     return dataReceived;

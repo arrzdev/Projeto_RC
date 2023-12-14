@@ -28,6 +28,9 @@ Command* CommandFactory::createCommand(string command, vector<string> arguments)
     else if(command == SHOW_ASSET || command == SHOW_ASSET_SHORT){
         return CommandFactory::createShowAsset(arguments);
     }
+    else if(command == OPEN){
+        return CommandFactory::createOpen(arguments);
+    }
     else {
         printf("Invalid command\n");
         return nullptr;
@@ -143,4 +146,18 @@ Command* CommandFactory::createShowAsset(vector<string> arguments) {
     }
 
     return new ShowAsset(assetId);
+}
+
+Command* CommandFactory::createOpen(vector<string> arguments) {
+    if(arguments.size() != 4) {
+        printf("Usage: open <name> <asset_fname> <start_value> <timeactive>\n");
+        return nullptr;
+    }
+
+    string name = arguments[0];
+    string assetFileName = arguments[1];
+    string startValue = arguments[2];
+    string timeactive = arguments[3];
+
+    return new Open(name, startValue, timeactive, assetFileName);
 }

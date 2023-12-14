@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
     int exit = 0;
 
-    while(exit) {
+    while(!exit) {
         printf("\n> ");
 
         string input;

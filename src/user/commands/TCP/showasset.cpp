@@ -32,7 +32,7 @@ void ShowAsset::receive(){
 
     }
     else if(status == STATUS_NOK){
-        printf("Asset %s not found\n", this->assetId.c_str());
+        printf("%s\n", string(SHOW_ASSET_FAILURE).c_str());
     }
 }
 
@@ -55,7 +55,7 @@ void ShowAsset::saveFile(string fileName, vector<string>* fileData) {
         }
     }
 
-    fs.open();
+    fs.open(WRITE);
 
     fs.write(&fileDataString);
 

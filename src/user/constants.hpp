@@ -67,8 +67,10 @@
 #define UDP_SHOW_RECORD_RESPONSE "RRC"
 
 #define TCP_SHOW_ASSET_COMMAND "SAS"
+#define TCP_OPEN_COMMAND "OPA"
 
 #define TCP_SHOW_ASSET_RESPONSE "RSA"
+#define TCP_OPEN_RESPONSE "ROA"
 
 #define NOT_LOGGED_IN "user not logged in"
 #define USER_ALREADY_LOGGED_IN "user already logged in, please logout first"
@@ -92,5 +94,9 @@
 
 #define MY_BIDS_EMPTY "no ongoing bids"
 #define MY_BIDS_FAILURE "user not logged in"
+
+#define SHOW_ASSET_FAILURE "asset not found"
+
+#define OPEN_FAILURE "auction not started"
 
 #endif // USER_CONSTANTS_H

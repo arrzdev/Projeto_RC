@@ -9,19 +9,23 @@
 
 using namespace std;
 
+#define READ 1
+#define WRITE 2
+
 
 class Fs {
     public:
         Fs(string path): path(path) {};
 
-        bool write(vector<string>* data);
         bool write(string* data);
 
-        bool read(vector<string>* data, size_t chuncks_size);
+        bool read(string* data);
+
+        int getSize();
 
         bool isOpen();
 
-        bool open();
+        bool open(int mode);
         bool close();
 
         string getPath();

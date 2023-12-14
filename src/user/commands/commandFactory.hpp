@@ -16,6 +16,7 @@
 #include "./UDP/showrecord.hpp"
 
 #include "./TCP/showasset.hpp"
+#include "./TCP/open.hpp"
 
 #include <string>
 #include <vector>
@@ -37,6 +38,7 @@ private:
 
     // TCP commands
     static Command* createShowAsset(vector<string> args);
+    static Command* createOpen(vector<string> args);
 };
 
 #endif // USER_COMMAND_FACTORY_H
