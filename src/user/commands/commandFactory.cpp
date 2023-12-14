@@ -51,6 +51,17 @@ Command* CommandFactory::createLogin(vector<string> arguments) {
 
     string user = arguments[0];
     string password = arguments[1];
+
+    if(!Verify::isUID(user)) {
+        printf("%s\n", string(INVALID_UID).c_str());
+        return nullptr;
+    }
+
+    if(!Verify::isPassword(password)) {
+        printf("%s\n", string(INVALID_PASSWORD).c_str());
+        return nullptr;
+    }
+
     return new Login(user, password);
 }
 
@@ -116,6 +127,11 @@ Command* CommandFactory::createShowRecord(vector<string> arguments) {
 
     string auctionId = arguments[0];
 
+    if(!Verify::isAID(auctionId)) {
+        printf("%s\n", string(INVALID_AID).c_str());
+        return nullptr;
+    }
+
     //TODO check if feature to add rest of characters is needed
     /**
      * if user types 1 add rest of characters to be 3 characters long
@@ -165,6 +181,26 @@ Command* CommandFactory::createOpen(vector<string> arguments) {
     string startValue = arguments[2];
     string timeactive = arguments[3];
 
+    if(!Verify::isAuctionName(name)) {
+        printf("%s\n", string(INVALID_AUCTION_NAME).c_str());
+        return nullptr;
+    }
+
+    if(!Verify::isAuctionStartValue(startValue)) {
+        printf("%s\n", string(INVALID_AUCTION_START_VALUE).c_str());
+        return nullptr;
+    }
+
+    if(!Verify::isAuctionDuration(timeactive)) {
+        printf("%s\n", string(INVALID_AUCTION_DURATION).c_str());
+        return nullptr;
+    }
+
+    if(!Verify::isFileName(assetFileName)) {
+        printf("%s\n", string(INVALID_AUCTION_FILE_NAME).c_str());
+        return nullptr;
+    }
+
     return new Open(name, startValue, timeactive, assetFileName);
 }
 
@@ -175,6 +211,11 @@ Command* CommandFactory::createClose(vector<string> arguments) {
     }
 
     string auctionId = arguments[0];
+
+    if(!Verify::isAID(auctionId)) {
+        printf("%s\n", string(INVALID_AID).c_str());
+        return nullptr;
+    }
 
     //TODO check if feature to add rest of characters is needed
     /**
@@ -199,6 +240,16 @@ Command* CommandFactory::createBid(vector<string> arguments) {
 
     string auctionId = arguments[0];
     string value = arguments[1];
+
+    if(!Verify::isAID(auctionId)) {
+        printf("%s\n", string(INVALID_AID).c_str());
+        return nullptr;
+    }
+
+    if(!Verify::isNumber(value)) {
+        printf("%s\n", string(INVALID_VALUE).c_str());
+        return nullptr;
+    }
 
     //TODO check if feature to add rest of characters is needed
     /**

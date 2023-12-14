@@ -48,7 +48,10 @@ string Open::formatData() {
     string userId = this->clientState->getUser();
     string password = this->clientState->getPassword();
 
-    string fileSize = to_string(getFileSize());
+    int fSize = getFileSize();
+
+    string fileSize = to_string(fSize);
+
     string fileData = getFileData();
 
     return string(TCP_OPEN_COMMAND) + " " + userId + " " + password + " " + this->name + " " + this->startValue + " " + this->timeActive + " " + this->fileName + " " + fileSize + " " + fileData + "\n";
@@ -66,6 +69,10 @@ int Open::getFileSize() {
     }
 
     fs.close();
+
+    if(size > MAX_FILE_SIZE) {
+        //TODO handle error
+    }
 
     return size;
 }

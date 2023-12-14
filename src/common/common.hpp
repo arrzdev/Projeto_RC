@@ -3,5 +3,6 @@
 
 #include "parser.hpp"
 #include "fs.hpp"
+#include "verify.hpp"
 
 #endif

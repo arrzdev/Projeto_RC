@@ -123,4 +123,15 @@
 #define BID_ILLEGAL "illegal bid, cant bid on own auction"
 
 
+#define INVALID_UID "invalid uid"
+#define INVALID_PASSWORD "invalid password"
+#define INVALID_AUCTION_NAME "invalid auction name"
+#define INVALID_AUCTION_START_VALUE "invalid auction start value"
+#define INVALID_AUCTION_DURATION "invalid auction time duration"
+#define INVALID_AUCTION_FILE_NAME "invalid auction file name"
+#define INVALID_AUCTION_FILE_SIZE "invalid auction file size"
+#define INVALID_AID "invalid aid"
+#define INVALID_VALUE "invalid value"
+
+
 #endif // USER_CONSTANTS_H
