@@ -1,30 +1,50 @@
 #include "main.hpp"
 
 int main(int argc, char** argv) {
-    int port = DEFAULT_PORT;
+  int port = DEFAULT_PORT;
+  bool verbose = DEFAULT_VERBOSE;
 
-    bool verbose = DEFAULT_VERBOSE;
+  for (int i = 0; i < argc; i++) {
+    string arg = argv[i];
 
-    for (int i = 0; i < argc; i++) {
-        string arg = argv[i];
+    if (arg == PORT_FLAG) {
+      port = atoi(argv[i + 1]);
+    } else if (arg == VERBOSE_FLAG) {
+      verbose = true;
+    }
+  }
 
-        if (arg == PORT_FLAG) {
-            port = atoi(argv[i + 1]);
-        } else if (arg == VERBOSE_FLAG) {
-            verbose = true;
-        }
+  printf("Starting server on port %d %s verbose mode\n", port, verbose ? "with" : "without");
+
+  //class socket supports both udp and tcp
+  UdpSocket udpMonitor = UdpSocket(port, verbose);
+
+  while (true) {
+    // at all times udpMonitor.clientAdress will have the adress of the last client that communicated
+    string receivedData = udpMonitor.receiveData();
+
+    if (receivedData == "") { //no data received
+      continue;
     }
 
-    printf("Starting server on port %d %s verbose mode\n", port, verbose ? "with" : "without");
+    Command *command = CommandFactory::createCommand(receivedData);
 
-    UdpServer udpServer = UdpServer(port, verbose);
-
-    while (true) {
-        string data = udpServer.receiveData();
-
-        udpServer.sendData(data);
+    if (command == NULL) {
+      continue;
     }
+    
+    //set up the socket connection for the command
+    command->setupSocketConnection(
+      port, 
+      verbose, 
+      udpMonitor.getSocketfd(),
+      udpMonitor.getServerInfo(),
+      udpMonitor.getClientInfo()
+    );
 
+    command->execute();
+    command->send();
+  }
 
-    return 0;
+  return 0;
 }

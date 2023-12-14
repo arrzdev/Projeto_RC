@@ -11,6 +11,8 @@
 #define AUCTION_SIZE 5 // AID status
 #define COMMAND_REPLY 3
 #define STATUS 3
+
+//max protocol command size
 #define CHUNCKS COMMAND_REPLY + 1 + STATUS + AUCTION_SIZE*MAX_AUCTIONS + 1
 
 #endif
