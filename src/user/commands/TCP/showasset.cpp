@@ -15,7 +15,7 @@ void ShowAsset::receive(){
     vector<string> args = parser.getArgs();
 
     if(command != TCP_SHOW_ASSET_RESPONSE || args.size() < 1) {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -33,6 +33,10 @@ void ShowAsset::receive(){
     }
     else if(status == STATUS_NOK){
         printf("%s\n", string(SHOW_ASSET_FAILURE).c_str());
+    }
+    else {
+        throw ServerResponseError();
+    
     }
 }
 
@@ -55,9 +59,15 @@ void ShowAsset::saveFile(string fileName, vector<string>* fileData) {
         }
     }
 
-    fs.open(WRITE);
+    if(fs.open(WRITE) == -1) {
+        throw FsWriteError();
+    }
 
-    fs.write(&fileDataString);
+    if(fs.write(&fileDataString) == -1) {
+        throw FsWriteError();
+    }
 
-    fs.close();
+    if(fs.close() == -1) {
+        throw FsWriteError();
+    }
 }

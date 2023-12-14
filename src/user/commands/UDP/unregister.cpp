@@ -25,7 +25,7 @@ void Unregister::receive(){
     vector<string> args = parser.getArgs();
 
     if(command != UDP_UNREGISTER_RESPONSE || args.size() != 1) {
-        // TODO: handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -45,7 +45,7 @@ void Unregister::receive(){
     }
     
     else {
-        //TODO handle error
+        throw ServerResponseError();
     }
 }
 

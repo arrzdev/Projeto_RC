@@ -25,7 +25,7 @@ void MyAuctions::receive(){
     vector<string> args = parser.getArgs();
 
     if(command != UDP_MY_AUCTIONS_RESPONSE || args.size() < 1) {
-        // TODO: handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -49,7 +49,7 @@ void MyAuctions::receive(){
         printf("%s\n", MY_AUCTIONS_FAILURE);
     }
     else {
-        //TODO: handle error
+        throw ServerResponseError();
     }
     
 }

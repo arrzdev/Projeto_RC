@@ -14,17 +14,13 @@ UdpClient::UdpClient(string ip, int port) {
     */
     this->sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
-    //TODO handle error
     if(this->sockfd < 0) {
-        printf("Error creating socket\n");
-        exit(1);
+        throw ConnectionSetupError();
     }
 
     this->serverAddr.sin_family = AF_INET;
     this->serverAddr.sin_port = htons(this->serverPort);
     this->serverAddr.sin_addr.s_addr = inet_addr(this->serverIP.c_str());
-
-    //TODO handle error
 }
 
 int UdpClient::sendData(const string& data) {
@@ -32,10 +28,8 @@ int UdpClient::sendData(const string& data) {
 
     int n = sendto(this->sockfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
 
-    //TODO handle error
     if(n < 0) {
-        printf("Error sending data\n");
-        return -1;
+        throw ConnectionFailedError();
     }
 
     return n;
@@ -46,7 +40,7 @@ string UdpClient::receiveData() {
     tv.tv_sec = CONNECTION_TIMEOUT;
 
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
-        // TODO handle error
+        throw ConnectionSetupError();
     }
 
     char buffer[CHUNCKS];
@@ -57,7 +51,7 @@ string UdpClient::receiveData() {
         if(tv.tv_sec == CONNECTION_TIMEOUT) {
             throw ConnectionTimeoutError();
         }
-        //TODO handle error
+        throw ConnectionFailedError();
     }
 
     // Set to n-1 because of the \n

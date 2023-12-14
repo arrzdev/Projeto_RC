@@ -25,7 +25,7 @@ void Close::receive() {
     vector<string> args = parser.getArgs();
 
     if(command != TCP_CLOSE_RESPONSE || args.size() != 1) {
-        // TODO: handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -49,7 +49,7 @@ void Close::receive() {
         printf("%s\n", string(CLOSE_ALREADY_CLOSED).c_str());
     }
     else {
-        //TODO: Handle error
+        throw ServerResponseError();
     }
 }
 

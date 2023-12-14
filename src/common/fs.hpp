@@ -17,16 +17,16 @@ class Fs {
     public:
         Fs(string path): path(path) {};
 
-        bool write(string* data);
+        int write(string* data);
 
-        bool read(string* data);
+        int read(string* data);
 
         int getSize();
 
         bool isOpen();
 
-        bool open(int mode);
-        bool close();
+        int open(int mode);
+        int close();
 
         string getPath();
 

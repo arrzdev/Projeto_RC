@@ -13,7 +13,6 @@
 #define TCP_VERBOSE true
 
 #define CONNECTION_TIMEOUT 5
-#define CONNECTION_TIMEOUT_MSG "Connection timed out"
 
 #define MAX_AUCTIONS 999
 #define AUCTION_SIZE 5 // AID status

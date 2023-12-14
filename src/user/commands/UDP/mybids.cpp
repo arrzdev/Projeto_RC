@@ -26,7 +26,7 @@ void MyBids::receive() {
     vector<string> args = parser.getArgs();
 
     if(command != UDP_MY_BIDS_RESPONSE || args.size() < 1) {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -46,7 +46,7 @@ void MyBids::receive() {
         printf("%s\n", MY_BIDS_FAILURE);
     }
     else {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
 

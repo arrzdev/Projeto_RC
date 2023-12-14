@@ -25,7 +25,7 @@ void Open::receive() {
     vector<string> args = parser.getArgs();
 
     if(command != TCP_OPEN_RESPONSE || args.size() < 1) {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -40,6 +40,9 @@ void Open::receive() {
     }
     else if(status == STATUS_NOT_LOGGED_IN) {
         printf("%s\n", string(NOT_LOGGED_IN).c_str());
+    }
+    else {
+        throw ServerResponseError();
     }
 
 }
@@ -60,18 +63,22 @@ string Open::formatData() {
 int Open::getFileSize() {
     Fs fs = Fs(this->fileName);
 
-    fs.open(READ);
+    if(fs.open(READ) == -1) {
+        throw FsReadError();
+    }
 
     int size = fs.getSize();
 
     if(size == -1) {
-        //TODO handle error
+        throw FsReadError();
     }
 
-    fs.close();
+    if(fs.close() == -1) {
+        throw FsReadError();
+    }
 
     if(size > MAX_FILE_SIZE) {
-        //TODO handle error
+       throw FileSizeError();
     }
 
     return size;
@@ -83,16 +90,17 @@ string Open::getFileData() {
     // create pointer to string
     string data = "";
 
-    fs.open(READ);
-
-    bool ok = fs.read(&data);
-
-
-    if(!ok) {
-        //TODO handle error
+    if(fs.open(READ) == -1) {
+        throw FsReadError();
     }
 
-    fs.close();
+    if(fs.read(&data) == -1) {
+        throw FsReadError();
+    }
+
+    if(fs.close() == -1) {
+        throw FsReadError();
+    }
 
     return data;
 }

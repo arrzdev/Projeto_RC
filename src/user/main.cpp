@@ -33,19 +33,25 @@ int main(int argc, char** argv) {
 
         getline(cin, input);
 
-        Command* command = CommandParser::parseCommand(input);
+        try {
+            Command* command = CommandParser::parseCommand(input);
 
-        if(command == nullptr) {
-            continue;
+            if(command == nullptr) {
+                continue;
+            }
+
+            command->setNetworkClient(serverIP, serverPort);
+
+            command->setClientState(&clientState);
+
+            exit = command->execute();
+
+            delete command;
+        } catch (const CostumError& e) {
+            printf("%s\n", e.what());
+        } catch (const exception& e) {
+            printf("%s\n", string(UNKNOW_ERROR_MSG).c_str());
         }
-
-        command->setNetworkClient(serverIP, serverPort);
-
-        command->setClientState(&clientState);
-
-        exit = command->execute();
-
-        delete command;
     }   
 
     return 0;

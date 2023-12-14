@@ -7,7 +7,7 @@ string Fs::getPath() {
 /**
  * @param mode READ or WRITE
  */
-bool Fs::open(int mode) {
+int Fs::open(int mode) {
     // Isto nao consegue abrir o ficheiro dentro de uma pasta
     if(mode == READ){
         this->fd = ::open(this->path.c_str(), O_RDONLY, 0644);
@@ -16,38 +16,38 @@ bool Fs::open(int mode) {
         this->fd = ::open(this->path.c_str(), O_WRONLY | O_CREAT, 0644);
     }
     else{
-        return false;
+        return -1;
     }
 
     if(this->fd < 0) {
-        return false;
+        return -1;
     }
 
-    return true;
+    return 0;
 }
 
-bool Fs::close() {
+int Fs::close() {
     if(!isOpen() || ::close(this->fd) < 0) {
-        return false;
+        return -1;
     }
 
-    return true;
+    return 0;
 }
 
 bool Fs::isOpen() {
     return this->fd != -1;
 }
 
-bool Fs::write(string* data) {
+int Fs::write(string* data) {
     if(!isOpen()) {
-        return false;
+        return -1;
     }
     
     if(::write(this->fd, data->c_str(), data->size()) < 0) {
-        return false;
+        return -1;
     }
 
-    return true;
+    return 0;
 }
 
 int Fs::getSize() {
@@ -66,15 +66,15 @@ int Fs::getSize() {
     return static_cast<int>(size);
 }
 
-bool Fs::read(string* data) {
+int Fs::read(string* data) {
     if(!isOpen()) {
-        return false;
+        return -1;
     }
 
     int size = getSize();
 
     if(size <= 0) {
-        return false;
+        return -1;
     }
 
     char buffer[size];
@@ -85,10 +85,10 @@ bool Fs::read(string* data) {
     ssize_t bytesRead = ::read(this->fd, buffer, size);
 
     if(bytesRead < 0) {
-        return false;
+        return -1;
     }
 
     *data = string(buffer, bytesRead);
 
-    return true;
+    return 0;
 }

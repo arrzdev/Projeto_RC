@@ -25,7 +25,7 @@ void Bid::receive() {
     vector<string> args = parser.getArgs();
 
     if(command != TCP_BID_RESPONSE || args.size() != 1) {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -47,7 +47,7 @@ void Bid::receive() {
 
     }
     else {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
 }

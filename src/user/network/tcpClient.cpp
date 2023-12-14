@@ -6,20 +6,16 @@ TcpClient::TcpClient(string ip, int port) {
 
     this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-    //TODO handle error
     if (this->sockfd < 0) {
-        printf("Error creating socket");
-        exit(1);
+        throw ConnectionSetupError();
     }
 
     this->serverAddr.sin_family = AF_INET;
     this->serverAddr.sin_port = htons(this->serverPort);
     this->serverAddr.sin_addr.s_addr = inet_addr(this->serverIP.c_str());
 
-    //TODO handle error
     if (connect(this->sockfd, (struct sockaddr *)&this->serverAddr, sizeof(this->serverAddr)) < 0) {
-        printf("Error connecting to server");
-        exit(1);
+        throw ConnectionFailedError();
     }
 }
 
@@ -28,10 +24,8 @@ int TcpClient::sendData(const string &data) {
 
     int n = write(this->sockfd, data.c_str(), data.length());
 
-    //TODO handle error
     if (n < 0) {
-        printf("Error sending data\n");
-        return -1;
+        throw ConnectionFailedError();
     }
 
     return n;
@@ -42,7 +36,7 @@ string TcpClient::receiveData() {
     tv.tv_sec = CONNECTION_TIMEOUT;
 
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
-        // TODO handle error
+        throw ConnectionSetupError();
     }
 
     string dataReceived = "";
@@ -56,22 +50,18 @@ string TcpClient::receiveData() {
         char buffer[CHUNCKS];
         n = read(this->sockfd, buffer, sizeof(buffer));
 
-        //TODO handle error
         if(n < 0) {
             if(tv.tv_sec == CONNECTION_TIMEOUT) {
                 throw ConnectionTimeoutError();
             }
 
-            printf("Error receiving data\n");
-            return "";
+            throw ConnectionFailedError();
         }
 
         totalBytes += n;
 
-        //TODO handle error
         if(totalBytes > MAX_TCP_REPLY_SIZE) {
-            printf("Error receiving data\n");
-            return "";
+            throw FileSizeError();
         }
 
         dataReceived.append(buffer, n);

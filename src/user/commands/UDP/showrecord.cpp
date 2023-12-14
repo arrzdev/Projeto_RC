@@ -15,7 +15,7 @@ void ShowRecord::receive() {
     vector<string> args = parser.getArgs();
 
     if(command != UDP_SHOW_RECORD_RESPONSE || args.size() < 1) {
-        //TODO handle error
+        throw ServerResponseError();
     }
 
     string status = args[0];
@@ -46,6 +46,9 @@ void ShowRecord::receive() {
     }
     else if(status == STATUS_NOK){
         printf("Auction %s not found\n", this->auctionId.c_str());
+    }
+    else {
+        throw ServerResponseError();
     }
 }
 

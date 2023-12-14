@@ -132,7 +132,6 @@ Command* CommandFactory::createShowRecord(vector<string> arguments) {
         return nullptr;
     }
 
-    //TODO check if feature to add rest of characters is needed
     /**
      * if user types 1 add rest of characters to be 3 characters long
      */
@@ -155,7 +154,6 @@ Command* CommandFactory::createShowAsset(vector<string> arguments) {
 
     string assetId = arguments[0];
 
-    //TODO check if feature to add rest of characters is needed
     /**
      * if user types 1 add rest of characters to be 3 characters long
      */
@@ -217,7 +215,6 @@ Command* CommandFactory::createClose(vector<string> arguments) {
         return nullptr;
     }
 
-    //TODO check if feature to add rest of characters is needed
     /**
      * if user types 1 add rest of characters to be 3 characters long
      */
@@ -251,7 +248,6 @@ Command* CommandFactory::createBid(vector<string> arguments) {
         return nullptr;
     }
 
-    //TODO check if feature to add rest of characters is needed
     /**
      * if user types 1 add rest of characters to be 3 characters long
      */
