@@ -1,13 +1,7 @@
 #ifndef USER_LIST_H
 #define USER_LIST_H
 
-#include "command.hpp"
-
-#include <string>
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class List : public Command {
     public:

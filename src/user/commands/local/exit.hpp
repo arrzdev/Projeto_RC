@@ -1,10 +1,7 @@
 #ifndef USER_EXIT_H
 #define USER_EXIT_H
 
-#include "command.hpp"
-#include <string>
-
-#include "constants.hpp"
+#include "../command.hpp"
 
 using namespace std;
 

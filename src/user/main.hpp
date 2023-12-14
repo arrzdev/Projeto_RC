@@ -1,9 +1,9 @@
 #ifndef USER_MAIN_H
 #define USER_MAIN_H
 
-#include "commandParser.hpp"
+#include "./commands/commandParser.hpp"
+#include "./network/networkClient.hpp"
 #include "clientState.hpp"
-#include "networkClient.hpp"
 
 #include "constants.hpp"
 

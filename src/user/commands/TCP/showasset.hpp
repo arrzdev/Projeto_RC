@@ -1,7 +1,7 @@
 #ifndef CLIENT_SHOW_ASSET_H
 #define CLIENT_SHOW_ASSET_H
 
-#include "command.hpp"
+#include "../command.hpp"
 
 class ShowAsset : public Command {
     public:

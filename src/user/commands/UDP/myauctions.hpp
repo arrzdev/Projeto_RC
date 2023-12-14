@@ -1,13 +1,7 @@
 #ifndef USER_MYAUCTIONS_H
 #define USER_MYAUCTIONS_H
 
-#include "command.hpp"
-
-#include <string>
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class MyAuctions : public Command {
     public:

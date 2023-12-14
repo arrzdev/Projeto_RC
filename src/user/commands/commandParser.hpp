@@ -1,7 +1,7 @@
 #ifndef USER_COMMANDPARSER_H
 #define USER_COMMANDPARSER_H
 
-#include "../common/common.hpp"
+#include "../../common/common.hpp"
 
 #include "string.h"
 
@@ -9,7 +9,7 @@
 
 #include "commandFactory.hpp"
 
-#include "constants.hpp"
+#include "../constants.hpp"
 
 using namespace std;
 

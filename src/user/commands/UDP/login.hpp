@@ -1,14 +1,7 @@
 #ifndef USER_LOGIN_H
 #define USER_LOGIN_H
 
-#include "command.hpp"
-#include <string>
-
-#include "../common/common.hpp"
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class Login : public Command {
     private:

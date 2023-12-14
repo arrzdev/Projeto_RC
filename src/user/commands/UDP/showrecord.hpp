@@ -1,9 +1,7 @@
 #ifndef USER_SHOWRECORD_HPP
 #define USER_SHOWRECORD_HPP
 
-#include "command.hpp"
-
-#include "constants.hpp"
+#include "../command.hpp"
 
 class ShowRecord : public Command {
     public:

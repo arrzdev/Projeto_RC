@@ -1,14 +1,14 @@
 #ifndef USER_COMMAND_H
 #define USER_COMMAND_H
 
-#include "../common/common.hpp"
-#include "clientState.hpp"
+#include "../../common/common.hpp"
+#include "../clientState.hpp"
 
-#include "networkClient.hpp"
-#include "udpClient.hpp"
-#include "tcpClient.hpp"
+#include "../network/networkClient.hpp"
+#include "../network/udpClient.hpp"
+#include "../network/tcpClient.hpp"
 
-#include "constants.hpp"
+#include "../constants.hpp"
 
 #include <memory>
 

@@ -1,13 +1,7 @@
 #ifndef USER_LOGOUT_H
 #define USER_LOGOUT_H
 
-#include "command.hpp"
-
-#include <string>
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class Logout : public Command {
     public:

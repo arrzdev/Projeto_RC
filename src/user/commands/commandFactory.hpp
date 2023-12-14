@@ -1,18 +1,21 @@
 #ifndef USER_COMMAND_FACTORY_H
 #define USER_COMMAND_FACTORY_H
 
-#include "constants.hpp"
+#include "../constants.hpp"
 
 #include "command.hpp"
-#include "login.hpp"
-#include "logout.hpp"
-#include "exit.hpp"
-#include "unregister.hpp"
-#include "myauctions.hpp"
-#include "mybids.hpp"
-#include "list.hpp"
-#include "showrecord.hpp"
-#include "showasset.hpp"
+
+#include "./local/exit.hpp"
+
+#include "./UDP/login.hpp"
+#include "./UDP/logout.hpp"
+#include "./UDP/unregister.hpp"
+#include "./UDP/myauctions.hpp"
+#include "./UDP/mybids.hpp"
+#include "./UDP/list.hpp"
+#include "./UDP/showrecord.hpp"
+
+#include "./TCP/showasset.hpp"
 
 #include <string>
 #include <vector>

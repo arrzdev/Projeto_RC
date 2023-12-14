@@ -1,13 +1,7 @@
 #ifndef USER_UNREGISTER_H
 #define USER_UNREGISTER_H
 
-#include "command.hpp"
-
-#include <string>
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class Unregister : public Command {
     public:

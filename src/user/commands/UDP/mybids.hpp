@@ -1,13 +1,7 @@
 #ifndef USER_MYBIDS_HPP
 #define USER_MYBIDS_HPP
 
-#include "command.hpp"
-
-#include <string>
-
-#include "constants.hpp"
-
-using namespace std;
+#include "../command.hpp"
 
 class MyBids : public Command {
     public:

@@ -9,9 +9,9 @@ SERVER_DIR = src/server
 COMMON_DIR = src/common
 
 # Find all cpp files in the user and server directories
-USER_SOURCES = $(wildcard $(USER_DIR)/*.cpp)
-SERVER_SOURCES = $(wildcard $(SERVER_DIR)/*.cpp)
-COMMON_SOURCES = $(wildcard $(COMMON_DIR)/*.cpp)
+USER_SOURCES = $(shell find $(USER_DIR) -name '*.cpp')
+SERVER_SOURCES = $(shell find $(SERVER_DIR) -name '*.cpp')
+COMMON_SOURCES = $(shell find $(COMMON_DIR) -name '*.cpp')
 
 # Executable names
 USER_EXEC = ./user
