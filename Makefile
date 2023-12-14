@@ -15,7 +15,7 @@ COMMON_SOURCES = $(shell find $(COMMON_DIR) -name '*.cpp')
 
 # Executable names
 USER_EXEC = ./user
-SERVER_EXEC = ./AS
+SERVER_EXEC = ./server
 
 # Default target is to build the user and server executables but before clean
 all: clean $(USER_EXEC) $(SERVER_EXEC)
