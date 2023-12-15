@@ -28,11 +28,14 @@ int main(int argc, char** argv) {
     }
 
     Command *command = CommandFactory::createCommand(receivedData);
-
     if (command == NULL) {
+      printf("Exception was throwed\n");
+      udpMonitor.sendData(STATUS_ERR);
       continue;
     }
-    
+
+    udpMonitor.sendData(STATUS_ERR);
+
     //set up the socket connection for the command
     command->setupSocketConnection(
       port, 
@@ -43,7 +46,7 @@ int main(int argc, char** argv) {
     );
 
     command->execute();
-    command->send();
+    command->send(STATUS_ERR);
   }
 
   return 0;

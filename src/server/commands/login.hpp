@@ -13,7 +13,7 @@ private:
 
 public:
   Login(vector<string> args);
-  void send() override;
+  void send(string response) override;
   int execute() override;
 };
 
