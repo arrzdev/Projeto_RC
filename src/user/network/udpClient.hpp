@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// UDP client class derived from NetworkClient
 class UdpClient : public NetworkClient {
     public:
         UdpClient(string ip, int port);

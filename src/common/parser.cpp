@@ -4,6 +4,11 @@
 
 using namespace std;
 
+/**
+ * Class used to parse strings using spaces as delimiters
+ * - command is the first word of the string
+ * - args is a vector of all words except the first
+ */
 Parser::Parser(string input) {
     this->input = input;
 
@@ -27,10 +32,12 @@ Parser::Parser(string input) {
 
 }
 
+// returns first word of input
 string Parser::getCommand() {
     return this->command;
 }
 
+// returns all words of input except the first in a vector
 vector<string> Parser::getArgs() {
     return this->args;
 }
@@ -66,7 +73,19 @@ vector<IAuction> Parser::parseAuctions() {
     return auctions;
 }
 
+
+/**
+ * Handles response to command ShowRecord (sr)
+ * @return IShowRecord 
+ */
 IShowRecord Parser::parseShowRecord() {
+    /**
+     * string has this format:
+    * [host_UID  auction_name  asset_fname start_value start_date-time  timeactive]  
+    * [ B bidder_UID bid_value bid_date-time bid_sec_time]*  
+    * [ E end_date-time end_sec_time]
+     */
+
     IShowRecord showRecord;
 
     showRecord.hostId = this->args[1];

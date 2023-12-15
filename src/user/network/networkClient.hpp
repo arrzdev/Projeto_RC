@@ -14,7 +14,10 @@
 
 using namespace std;
 
-// Class that works as Interface
+/* 
+Abstract class for network clients 
+All methods of network clients are defined here
+*/
 class NetworkClient {
     public:
         ~NetworkClient();

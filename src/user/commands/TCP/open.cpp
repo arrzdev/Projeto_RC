@@ -60,6 +60,10 @@ string Open::formatData() {
     return string(TCP_OPEN_COMMAND) + " " + userId + " " + password + " " + this->name + " " + this->startValue + " " + this->timeActive + " " + this->fileName + " " + fileSize + " " + fileData + "\n";
 }
 
+/**
+ * Gets file size specified in input
+ * @return file size in bytes
+ */
 int Open::getFileSize() {
     Fs fs = Fs(this->fileName);
 
@@ -84,6 +88,10 @@ int Open::getFileSize() {
     return size;
 }
 
+/**
+ * Gets file data specified in input
+ * @return file data
+ */
 string Open::getFileData() {
     Fs fs = Fs(this->fileName);
 

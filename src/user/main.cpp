@@ -36,6 +36,8 @@ int main(int argc, char** argv) {
         try {
             Command* command = CommandParser::parseCommand(input);
 
+            // There is no corresponding command for the input
+            // or the command format is invalid
             if(command == nullptr) {
                 continue;
             }

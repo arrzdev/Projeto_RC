@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// TCP client class derived from NetworkClient
 class TcpClient : public NetworkClient {
     public:
         TcpClient(string ip, int port);

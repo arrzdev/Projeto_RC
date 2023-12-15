@@ -35,22 +35,27 @@ string TcpClient::receiveData() {
     struct timeval tv;
     tv.tv_sec = CONNECTION_TIMEOUT;
 
+    // Set timeout for receiving data
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
         throw ConnectionSetupError();
     }
 
     string dataReceived = "";
 
-    // n is the number of bytes read
+    // n is the number of bytes read, set to 1 to enter the loop
     int n = 1;
 
     int totalBytes = 0;
 
+
+    // loops until there is no more data to read
+    // add data being read to dataReceived string
     while(n != 0) {
         char buffer[CHUNCKS];
         n = read(this->sockfd, buffer, sizeof(buffer));
 
         if(n < 0) {
+            // check if error is because of timeout
             if(tv.tv_sec == CONNECTION_TIMEOUT) {
                 throw ConnectionTimeoutError();
             }

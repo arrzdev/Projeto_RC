@@ -39,6 +39,7 @@ string UdpClient::receiveData() {
     struct timeval tv;
     tv.tv_sec = CONNECTION_TIMEOUT;
 
+    // Set timeout for receiving data
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
         throw ConnectionSetupError();
     }
@@ -48,13 +49,14 @@ string UdpClient::receiveData() {
     int n = recvfrom(this->sockfd, buffer, CHUNCKS, 0, (struct sockaddr*) &this->serverAddr, &len);
 
     if(n < 0) {
+        // check if error is because of timeout
         if(tv.tv_sec == CONNECTION_TIMEOUT) {
             throw ConnectionTimeoutError();
         }
         throw ConnectionFailedError();
     }
 
-    // Set to n-1 because of the \n
+    // Set to n-1 because of the \n, removing \n helps with parsing and printing
     buffer[n-1] = '\0';
 
     string dataReceived = string(buffer);

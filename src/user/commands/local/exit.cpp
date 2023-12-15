@@ -2,6 +2,9 @@
 
 using namespace std;
 
+/*
+Returns 1 if exit command was successful, else 0
+*/
 int Exit::execute() {
     if(this->clientState->isLoggedIn()) {
         printf("You have to log out first\n");

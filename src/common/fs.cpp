@@ -5,7 +5,9 @@ string Fs::getPath() {
 }
 
 /**
+ * @brief opens file defined in constructor
  * @param mode READ or WRITE
+ * @return int 0 if success, -1 if error
  */
 int Fs::open(int mode) {
     // Isto nao consegue abrir o ficheiro dentro de uma pasta
@@ -26,18 +28,34 @@ int Fs::open(int mode) {
     return 0;
 }
 
+/**
+ * @brief Closes file defined in constructor
+ * @return int 0 if success, -1 if error
+ */
 int Fs::close() {
     if(!isOpen() || ::close(this->fd) < 0) {
         return -1;
     }
 
+    this->fd = -1;
+
     return 0;
 }
 
+/**
+ * @brief Checks if file defined in constructor is open
+ * @return true if file is open
+ * @return false if file is not open
+ */
 bool Fs::isOpen() {
     return this->fd != -1;
 }
 
+/**
+ * @brief Writes data to file defined in constructor
+ * @param data string pointer to data to be written to file
+ * @return int 0 if success, -1 if error
+ */
 int Fs::write(string* data) {
     if(!isOpen()) {
         return -1;
@@ -50,6 +68,11 @@ int Fs::write(string* data) {
     return 0;
 }
 
+/**
+ * @brief returns size of file in bytes
+ * 
+ * @return int -1 if error, else file size in bytes
+ */
 int Fs::getSize() {
     if(!isOpen()) {
         return -1;
@@ -66,6 +89,11 @@ int Fs::getSize() {
     return static_cast<int>(size);
 }
 
+/**
+ * @brief Reads data from file defined in constructor
+ * @param data string pointer to store data read from file
+ * @return int 0 if success, -1 if error
+ */
 int Fs::read(string* data) {
     if(!isOpen()) {
         return -1;

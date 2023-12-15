@@ -14,10 +14,9 @@
 
 using namespace std;
 
-// Command abstract class
-/**
- * 0 is a pure virtual function
- * default tells the compiler to use the default implementation
+/*
+Command Abstract Class
+All common methods and attributes for commands are defined here
 */
 class Command {
     protected:
@@ -43,7 +42,6 @@ class Command {
         // receives data from Auction Server
         virtual void receive() = 0;
 
-        // Executes command
         virtual int execute();
 
         // returns local command used
@@ -52,8 +50,14 @@ class Command {
         // returns formatted string of data to send to auction server
         virtual string formatData() = 0;
 
+        // pass client state to command
         void setClientState(ClientState* clientState);
 
+        /* 
+        define network client to use based on network type
+        - UDP: UDPClient
+        - TCP: TCPClient
+        */
         void setNetworkClient(string serverIp, int serverPort);
 };
 

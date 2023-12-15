@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/*
+Class that holds the state of the client, like the current user and password
+*/
 class ClientState {
     public:
         void loginUser(string user, string password);

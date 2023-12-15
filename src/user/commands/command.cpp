@@ -18,7 +18,10 @@ void Command::setNetworkClient(string serverIp, int serverPort) {
     }
 }
 
-// Only returns 1 if the command can exit
+/**
+ * Executes the command received from the user
+ * @return int - 0 if continue, 1 if exit
+ */
 int Command::execute() {
     this->send();
     this->receive();
