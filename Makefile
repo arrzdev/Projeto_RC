@@ -20,9 +20,9 @@ SERVER_EXEC = ./server
 # Default target is to build the user and server executables but before clean
 all: clean $(USER_EXEC) $(SERVER_EXEC)
 
-user: clean $(USER_EXEC)
+user: clean-user $(USER_EXEC)
 
-server: clean $(SERVER_EXEC)
+server: clean-server $(SERVER_EXEC)
 
 # Rules for building user and server executables
 $(USER_EXEC):
@@ -40,5 +40,10 @@ debug:
 # Clean up
 clean:
 	rm -f $(USER_EXEC) $(SERVER_EXEC)
+
+clean-user:
+	rm -f $(USER_EXEC)
+
+clean-server:
 
 .PHONY: all clean debug
