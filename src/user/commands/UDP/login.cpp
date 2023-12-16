@@ -31,7 +31,6 @@ void Login::receive() {
 
     if(status == STATUS_OK) {
         this->clientState->loginUser(this->user, this->password);
-
         printf("%s\n", string(LOGIN_SUCCESS).c_str());
     }
 
@@ -40,7 +39,8 @@ void Login::receive() {
     }
     
     else if(status == STATUS_REGISTERD) {
-        printf("%s\n", string(LOGIN_REGISTER).c_str());
+      this->clientState->loginUser(this->user, this->password);
+      printf("%s\n", string(LOGIN_REGISTER).c_str());
     }
     
     else {
