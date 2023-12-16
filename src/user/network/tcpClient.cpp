@@ -34,6 +34,7 @@ int TcpClient::sendData(const string &data) {
 string TcpClient::receiveData() {
     struct timeval tv;
     tv.tv_sec = CONNECTION_TIMEOUT;
+    tv.tv_usec = 0;
 
     // Set timeout for receiving data
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
@@ -72,6 +73,7 @@ string TcpClient::receiveData() {
         dataReceived.append(buffer, n);
     }
 
+    // remove \n from the end of the string
     dataReceived = dataReceived.substr(0, dataReceived.length() - 1);
 
     if(TCP_VERBOSE) printf("Received data: %s\n", dataReceived.c_str());
