@@ -33,8 +33,10 @@ int main(int argc, char** argv) {
 
         getline(cin, input);
 
+        Command* command;
+
         try {
-            Command* command = CommandParser::parseCommand(input);
+            command = CommandParser::parseCommand(input);
 
             // There is no corresponding command for the input
             // or the command format is invalid
@@ -47,12 +49,14 @@ int main(int argc, char** argv) {
             command->setClientState(&clientState);
 
             exit = command->execute();
-
-            delete command;
         } catch (const CostumError& e) {
             printf("%s\n", e.what());
         } catch (const exception& e) {
             printf("%s\n", string(UNKNOW_ERROR_MSG).c_str());
+        }
+
+        if(command != nullptr) {
+            delete command;
         }
     }   
 

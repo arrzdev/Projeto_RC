@@ -38,6 +38,7 @@ int UdpClient::sendData(const string& data) {
 string UdpClient::receiveData() {
     struct timeval tv;
     tv.tv_sec = CONNECTION_TIMEOUT;
+    tv.tv_usec = 0;
 
     // Set timeout for receiving data
     if(setsockopt(this->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {

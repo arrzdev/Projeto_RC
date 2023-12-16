@@ -10,7 +10,7 @@
 #define DEFAULT_PORT 58000
 
 #define UDP_VERBOSE false
-#define TCP_VERBOSE true
+#define TCP_VERBOSE false
 
 #define CONNECTION_TIMEOUT 5
 
