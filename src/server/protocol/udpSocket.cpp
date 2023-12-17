@@ -4,16 +4,17 @@
 UdpSocket::UdpSocket(int port, bool verbose) {
   this->port = port;
   this->verbose = verbose;
-  this->socketfd = socket(AF_INET, SOCK_DGRAM, 0); //creates a new file descriptor for the socket
+  this->monitorSocketfd = socket(AF_INET, SOCK_DGRAM, 0); //creates a new file descriptor for the socket
+  this->commandSocketfd = this->monitorSocketfd; //for UDP, the command socket is the same as the monitor socket
   
-  if (this->socketfd < 0 && this->verbose) {
+  if (this->monitorSocketfd < 0 && this->verbose) {
     printf("Error creating socket\n");
   }
   
   this->serverInfo.sin_port = htons(this->port);
 
   // bind socket to port
-  int err = bind(this->socketfd, (struct sockaddr *) &this->serverInfo, sizeof(this->serverInfo));
+  int err = bind(this->monitorSocketfd, (struct sockaddr *)&this->serverInfo, sizeof(this->serverInfo));
 
   if (err < 0) {
     // TODO error handling
@@ -27,7 +28,8 @@ UdpSocket::UdpSocket(int port, bool verbose) {
 UdpSocket::UdpSocket(int port, bool verbose, int socketfd, struct sockaddr_in serverInfo, struct sockaddr_in clientInfo) {
   this->port = port;
   this->verbose = verbose;
-  this->socketfd = socketfd;
+  this->monitorSocketfd = socketfd;
+  this->commandSocketfd = socketfd;
   this->serverInfo = serverInfo;
   this->clientInfo = clientInfo;
 }
@@ -38,7 +40,7 @@ string UdpSocket::receiveData() {
   socklen_t len = sizeof(this->clientInfo);
 
   // when we use recvfrom we get the address of the client that sent the data and store it into clientInfo
-  int n = recvfrom(this->socketfd, buffer, CHUNCKS, 0, (struct sockaddr*) &this->clientInfo, &len);
+  int n = recvfrom(this->monitorSocketfd, buffer, CHUNCKS, 0, (struct sockaddr*) &this->clientInfo, &len);
   if (n < 0) {
     return "";
   }
@@ -57,7 +59,7 @@ string UdpSocket::receiveData() {
 }
 
 void UdpSocket::sendData(string data) {
-  int n = sendto(this->socketfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->clientInfo, sizeof(this->clientInfo));
+  int n = sendto(this->commandSocketfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->clientInfo, sizeof(this->clientInfo));
 
   if (n < 0) {
     // TODO error handling

@@ -53,5 +53,7 @@
 
 //max protocol command size
 #define CHUNCKS COMMAND_REPLY + 1 + STATUS + AUCTION_SIZE*MAX_AUCTIONS + 1
+#define MAX_FILE_SIZE 10 * 1024 * 1024                            // 10MB = 10*1024*1024 Bytes
+#define MAX_TCP_REPLY_SIZE 7 + 24 + 1 + 8 + 1 + MAX_FILE_SIZE + 1 // RSA <status(3)> <filename(24)> <filesize(8)> <filedata>
 
 #endif

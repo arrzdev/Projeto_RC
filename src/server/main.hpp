@@ -3,7 +3,9 @@
 
 #include "constants.hpp"
 #include "protocol/udpSocket.hpp"
+#include "protocol/tcpSocket.hpp"
 #include "commands/commandFactory.hpp"
+#include <thread>
 
 #include <string>
 #include <memory>

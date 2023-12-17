@@ -6,6 +6,8 @@
 
 #include "../protocol/socket.hpp"
 #include "../protocol/udpSocket.hpp"
+#include "../protocol/tcpSocket.hpp"
+
 #include "../../common/verify.hpp"
 #include "../../common/fs.hpp"
 #include "../database.hpp"

@@ -14,6 +14,9 @@
 #include "UDP/list.hpp"
 #include "UDP/showrecord.hpp"
 
+//include tcp commands
+#include "TCP/open.hpp"
+
 
 #include <string>
 #include <vector>

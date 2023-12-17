@@ -2,7 +2,6 @@
 
 Command* CommandFactory::createCommand(string protocolMessage) {
   Parser parser(protocolMessage);
-
   string command = parser.getCommand();
   vector<string> arguments = parser.getArgs();
 
@@ -36,12 +35,18 @@ Command* CommandFactory::createCommand(string protocolMessage) {
       printf("Creating show record command\n");
       return new ShowRecord(arguments);
     }
+    else if (command == "OPA"){
+      printf("Creating open auction command\n");
+      return new Open(arguments);
+    }
   } catch(const std::exception& e ) {
     printf("Command constructor failed because of validations\n");
-    return NULL;
+    return nullptr;
   }
 
   //clean parser
   parser.~Parser();
-  return NULL; // if no command is found, return NULL
+
+  //command doesnt exist return NULL
+  return nullptr;
 }

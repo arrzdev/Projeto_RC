@@ -2,8 +2,8 @@
 
 // deconstructor for Socket class
 Socket::~Socket() {
-  if (socketfd != -1) {
-    close(socketfd);
+  if (monitorSocketfd != -1) {
+    close(monitorSocketfd);
   }
 }
 
@@ -17,14 +17,14 @@ void Socket::setPort(int port) {
   this->port = port;
 }
 
-// getter for socketfd
-int Socket::getSocketfd() {
-  return socketfd;
+// getter for monitor socketfd
+int Socket::getMonitorSocketfd() {
+  return this->monitorSocketfd;
 }
 
-// setter for socketfd
-void Socket::setSocketfd(int socketfd) {
-  this->socketfd = socketfd;
+// getter for command socketfd
+int Socket::getCommandSocketfd() {
+  return this->commandSocketfd;
 }
 
 // getter for verbose

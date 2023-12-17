@@ -141,6 +141,92 @@ string getAllAuctions(){
   return auctions;
 }
 
+string createAuction(string uid, string name, string startValue, string timeActive, string fName, string fData){
+  try {
+  // Build the path to the auctions directory
+  string auctionsDirPath = "ASDIR/AUCTIONS";
+
+  //get the current auctions aid's and increment by one
+  int aid = 0;
+  for (const auto &entry : filesystem::directory_iterator(auctionsDirPath)){
+    // Get the auction aid
+    string aid_filename = entry.path().filename(); // remove .txt
+    string aid_str = aid_filename.substr(0, aid_filename.length() - 4);
+    int aid_int = stoi(aid_str);
+
+    // Update the aid if the current aid is greater
+    if (aid_int > aid){
+      aid = aid_int;
+    }
+  }
+
+  aid++; //increment to get the next aid
+
+  //add the leading zeros aid needs to be 3 digits
+  stringstream ss;
+  ss << setw(3) << setfill('0') << aid;
+  string aid_str = ss.str();
+
+  // Build the path to the auction directory
+  string auctionDirPath = auctionsDirPath + "/" + aid_str;
+
+  // Create the auction directory
+  filesystem::create_directories(auctionDirPath);
+
+  // Create the BIDS directory
+  filesystem::create_directories(auctionDirPath + "/BIDS");
+
+  // Create the ASSET directory
+  filesystem::create_directories(auctionDirPath + "/ASSET");
+
+  // Create inside USERS/UID/HOSTED a file with the name of the auction
+  string hostedDirPath = "ASDIR/USERS/" + uid + "/HOSTED";
+  string hostedFilePath = hostedDirPath + "/" + aid_str + ".txt";
+  ofstream hostedFile(hostedFilePath);
+
+  // Build the path to the auction file
+  string auctionFilePath = auctionDirPath + "/START_" + aid_str + ".txt";
+
+  // Store the auction data
+  ofstream startFile(auctionFilePath);
+  startFile << uid << " ";
+  startFile << name << " ";
+  startFile << fName << " ";
+  startFile << startValue << " ";
+  startFile << timeActive << " ";
+
+  // Get the current date and time
+  // start fulltime ´e a data de in´ıcio do leil˜ao em segundos contados a partir de 1970 - 01 - 01 00 : 00 : 00 tal como obtido pela chamada da fun¸c˜ao time().
+  time_t now = time(0);
+  tm *ltm = localtime(&now);
+
+  // Store the start date and time
+  startFile << 1900 + ltm->tm_year << "-" << 1 + ltm->tm_mon << "-" << ltm->tm_mday << " ";
+  startFile << std::setw(2) << std::setfill('0') << ltm->tm_hour << ":";
+  startFile << std::setw(2) << std::setfill('0') << ltm->tm_min << ":";
+  startFile << std::setw(2) << std::setfill('0') << ltm->tm_sec << " ";
+  startFile << now; // time in seconds since 1970-01-01 00:00:00
+
+  // Close the file
+  startFile.close();
+
+  // Build the path to the file
+  string assetFilePath = auctionDirPath + "/ASSET/" + fName;
+
+  // Store the asset data
+  ofstream assetFile(assetFilePath);
+  assetFile << fData;
+
+  // Close the file
+  assetFile.close();
+
+  return aid_str;
+  }
+  catch (const exception& e) { // if an error occurs return ""
+    return "";
+  }
+}
+
 
 int auctionExists(string aid){
   // Build the path to the auction file

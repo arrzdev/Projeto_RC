@@ -7,6 +7,9 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdexcept>
+
 
 using namespace std;
 
@@ -21,8 +24,8 @@ public:
   int getPort();
   void setPort(int port);
 
-  int getSocketfd();
-  void setSocketfd(int socketfd);
+  int getMonitorSocketfd();
+  int getCommandSocketfd();
 
   bool getVerbose();
   void setVerbose(bool verbose);
@@ -35,7 +38,8 @@ public:
 
 protected:
   int port;
-  int socketfd = -1;
+  int monitorSocketfd = -1;
+  int commandSocketfd = -1;
   bool verbose;
   struct sockaddr_in serverInfo;
   struct sockaddr_in clientInfo;

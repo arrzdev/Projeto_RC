@@ -20,6 +20,8 @@ void unregisterUser(string uid);
 int passwordMatches(string uid, string password);
 void createLoginFile(string uid);
 
+string createAuction(string uid, string name, string startValue, string timeActive, string fName, string fData);
+
 int auctionExists(string aid);
 string getUserAuctions(string uid);
 
@@ -32,4 +34,4 @@ string getAuctionEndInfo(string aid);
 
 string getUserBids(string uid);
 
-#endif
+#endif  
