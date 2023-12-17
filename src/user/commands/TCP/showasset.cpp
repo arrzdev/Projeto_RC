@@ -30,6 +30,8 @@ void ShowAsset::receive(){
 
         saveFile(fileName, &args);
 
+        printf("%s\n", string(SHOW_ASSET_SUCCESS).c_str());
+
     }
     else if(status == STATUS_NOK){
         printf("%s\n", string(SHOW_ASSET_FAILURE).c_str());

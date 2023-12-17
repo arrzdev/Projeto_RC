@@ -105,6 +105,7 @@
 #define MY_BIDS_FAILURE "user not logged in"
 
 #define SHOW_ASSET_FAILURE "asset not found"
+#define SHOW_ASSET_SUCCESS "asset was saved successfully"
 
 #define OPEN_FAILURE "auction not started"
 
