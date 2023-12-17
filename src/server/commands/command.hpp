@@ -1,13 +1,14 @@
 #ifndef __COMMAND_HPP__
 #define __COMMAND_HPP__
 
-#include <memory>
-#include <vector>
+#include <string>
 #include <stdexcept>
 
 #include "../protocol/socket.hpp"
 #include "../protocol/udpSocket.hpp"
 #include "../../common/verify.hpp"
+#include "../../common/fs.hpp"
+#include "../database.hpp"
 
 using namespace std;
 
@@ -20,10 +21,12 @@ class Command {
 protected:
   unique_ptr<Socket> socket;
   string socketType;
+  string returnCode;
 
 public:
-  virtual void send(string response) = 0;
-  virtual int execute() = 0;
+  virtual void execute() = 0; //needs to be implemented by the child class
+
+  void send(string status);
   void setupSocketConnection(int port, bool verbose, int socketfd, struct sockaddr_in serverInfo, struct sockaddr_in clientInfo);
 };
 

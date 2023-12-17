@@ -33,7 +33,7 @@ UdpSocket::UdpSocket(int port, bool verbose, int socketfd, struct sockaddr_in se
 }
 
 string UdpSocket::receiveData() {
-  char buffer[CHUNCKS];
+  char buffer[CHUNCKS] = {0}; //reset buffer
 
   socklen_t len = sizeof(this->clientInfo);
 
@@ -43,12 +43,14 @@ string UdpSocket::receiveData() {
     return "";
   }
 
+  //convert to our loved c++ strings
   string dataReceived = string(buffer);
 
-  dataReceived[n-1] = '\0';
+  // remove the \n
+  dataReceived.pop_back();
 
   if(this->verbose){
-    printf("Received data: %s\n", dataReceived.c_str());
+    printf("[UDP] Received: %s\n", dataReceived.c_str());
   }
 
   return dataReceived;

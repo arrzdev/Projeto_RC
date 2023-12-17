@@ -34,8 +34,6 @@ int main(int argc, char** argv) {
       continue;
     }
 
-    udpMonitor.sendData(STATUS_ERR);
-
     //set up the socket connection for the command
     command->setupSocketConnection(
       port, 
@@ -45,8 +43,9 @@ int main(int argc, char** argv) {
       udpMonitor.getClientInfo()
     );
 
+    //TODO: test if ERR code is sent when command is NULL and if the client handles it correctly
+
     command->execute();
-    command->send(STATUS_ERR);
   }
 
   return 0;

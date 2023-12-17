@@ -5,7 +5,15 @@
 #include "command.hpp"
 #include "../../common/common.hpp"
 
-#include "login.hpp"
+//include udp commands
+#include "UDP/login.hpp"
+#include "UDP/logout.hpp"
+#include "UDP/unregister.hpp"
+#include "UDP/myauctions.hpp"
+#include "UDP/mybids.hpp"
+#include "UDP/list.hpp"
+#include "UDP/showrecord.hpp"
+
 
 #include <string>
 #include <vector>
