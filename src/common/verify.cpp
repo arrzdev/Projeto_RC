@@ -132,20 +132,11 @@ bool Verify::isFileName(string fileName) {
         return false;
     }
 
-    for(size_t i = 0; i < len; i++) {
-        if(i == len-4 && fileName[i] != '.') {
-            return false;
-        }
-        else if(
-            !isAlphanumeric(fileName[i]) or 
-            fileName[i] == '-' or 
-            fileName[i] == '_' or 
-            fileName[i] == '.'
-        ) {
+    for(char c: fileName) {
+        if(!isAlphanumeric(c) && c != '-' && c != '_' && c != '.') {
             return false;
         }
     }
-
 
     return true;
 }
