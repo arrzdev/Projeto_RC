@@ -43,6 +43,10 @@ Command* CommandFactory::createCommand(string protocolMessage) {
       printf("Creating close auction command\n");
       return new Close(arguments);
     }
+    else if (command == "SAS"){
+      printf("Creating show asset command\n");
+      return new ShowAsset(arguments);
+    }
   } catch(const std::exception& e ) {
     printf("Command constructor failed because of validations\n");
     return nullptr;

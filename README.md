@@ -26,13 +26,15 @@ To test the commands, run `./user -n 193.136.138.142 -p 58011`
 -   myauctions (udp) ✅
 -   mybids (udp) ✅
 -   list (udp) ✅
--   show_asset (tcp) 🔴
+-   show_asset (tcp) ✅
 -   bid (tcp) 🔴
 -   show_record (udp) ✅
 
 
 ## FALTA
 segfault
+testar o codigo ERR
 adicionar timeouts
 Definir default port 
 auto avaliacao
+

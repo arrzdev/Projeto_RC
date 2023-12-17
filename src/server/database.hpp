@@ -33,6 +33,7 @@ string getUserAuctions(string uid);
 string getAllAuctions();
 
 int getAuctionState(string aid);
+string getAuctionAsset(string aid);
 string getAuctionInfo(string aid);
 string getAuctionBidsInfo(string aid);
 string getAuctionEndInfo(string aid);

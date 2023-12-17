@@ -103,7 +103,6 @@ string getUserBids(string uid){
   return bids;
 }
 
-
 string getUserAuctions(string uid){
   // Build the path to the hosted directory
   string hostedDirPath = "ASDIR/USERS/" + uid + "/HOSTED";
@@ -227,7 +226,9 @@ string createAuction(string uid, string name, string startValue, string timeActi
   }
 }
 
+
 bool closeAuction(string aid){
+  try{
     // Build the path to the end file
     string endFilePath = "ASDIR/AUCTIONS/" + aid + "/END_" + aid + ".txt";
 
@@ -269,6 +270,10 @@ bool closeAuction(string aid){
     endFile.close();
 
     return true;
+  }
+  catch (const exception& e) { // if an error occurs return false
+    return false;
+  }
 }
 
 int isOwnerAuction(string uid, string aid){
@@ -290,6 +295,7 @@ int auctionIsFinished(string aid){
 int auctionExists(string aid){
   // Build the path to the auction file
   string startAuctionPath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
+  
   return filesystem::exists(startAuctionPath);
 }
 
@@ -299,6 +305,42 @@ int getAuctionState(string aid){
   return !filesystem::exists(endendAuctionPath);
 }
 
+string getAuctionAsset(string aid){
+  try {
+    // Build the path to the asset file
+    string assetFilePath = "ASDIR/AUCTIONS/" + aid + "/ASSET";
+
+    //get the name of the file that is inside the asset directory
+    string assetFileName;
+    for (const auto &entry : filesystem::directory_iterator(assetFilePath)){
+      assetFileName = entry.path().filename();
+    }
+
+    //get the data of the file
+    ifstream assetFile(assetFilePath + "/" + assetFileName);
+
+    //get the size of the file
+    assetFile.seekg(0, ios::end);
+    int size = assetFile.tellg();
+    assetFile.seekg(0, ios::beg);
+
+    //read the file
+    char buffer[size];
+    assetFile.read(buffer, size);
+    buffer[size] = '\0'; // add the null terminator to the end of the buffer
+
+    // Close the file
+    assetFile.close();
+
+    //format the data
+    string assetData = assetFileName + " " + to_string(size) + " " + buffer;
+
+    return assetData;
+  } 
+  catch (const exception& e) { // if an error occurs return ""
+    return "";
+  }
+}
 
 string getAuctionInfo(string aid){
   // Build the path to the auction file
