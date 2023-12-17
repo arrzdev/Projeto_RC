@@ -5,6 +5,8 @@
 #include "protocol/udpSocket.hpp"
 #include "protocol/tcpSocket.hpp"
 #include "commands/commandFactory.hpp"
+#include "threadPool.hpp"
+
 #include <thread>
 
 #include <string>

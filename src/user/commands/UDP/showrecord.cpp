@@ -40,7 +40,7 @@ void ShowRecord::receive() {
             }
         } else {
             printf("Auction %s is still active\n", this->auctionId.c_str());
-            printf("Auction %s has been active for %s seconds\n", this->auctionId.c_str(), showRecord.timeActive.c_str());
+            printf("Auction %s has max time of %s seconds\n", this->auctionId.c_str(), showRecord.timeActive.c_str());
         
         }
     }

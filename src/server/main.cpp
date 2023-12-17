@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-void runUdpMonitor(int port, bool verbose){
+void runUdpMonitor(ThreadPool* threadPool, int port, bool verbose){
   printf("Starting udp monitor on port %d %s verbose mode\n", port, verbose ? "with" : "without");
   UdpSocket udpMonitor = UdpSocket(port, verbose);
 
@@ -22,11 +22,11 @@ void runUdpMonitor(int port, bool verbose){
       udpMonitor.getClientInfo()
     );
 
-    command->execute();
+    threadPool->enqueue(command);
   }
 }
 
-void runTcpMonitor(int port, bool verbose){
+void runTcpMonitor(ThreadPool* threadPool, int port, bool verbose){
   printf("Starting tcp monitor on port %d %s verbose mode\n", port, verbose ? "with" : "without");
   TcpSocket tcpMonitor = TcpSocket(port, verbose);
 
@@ -51,7 +51,7 @@ void runTcpMonitor(int port, bool verbose){
       tcpMonitor.getClientInfo()
     );
 
-    command->execute();
+    threadPool->enqueue(command);
   }
 }
 
@@ -73,9 +73,11 @@ int main(int argc, char **argv){
     }
   }
 
+  ThreadPool threadPool = ThreadPool();
+
   // run each monitor in a separate thread
-  thread udpMonitorThread(runUdpMonitor, port, verbose);
-  thread tcpMonitorThread(runTcpMonitor, port, verbose);
+  thread udpMonitorThread(runUdpMonitor, &threadPool, port, verbose);
+  thread tcpMonitorThread(runTcpMonitor, &threadPool, port, verbose);
 
   printf("Waiting for monitors to finish\n");
   udpMonitorThread.join();
