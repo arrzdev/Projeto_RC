@@ -227,6 +227,65 @@ string createAuction(string uid, string name, string startValue, string timeActi
   }
 }
 
+bool closeAuction(string aid){
+    // Build the path to the end file
+    string endFilePath = "ASDIR/AUCTIONS/" + aid + "/END_" + aid + ".txt";
+
+    // create the file
+    ofstream endFile(endFilePath);
+
+    // Get the current date and time
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+
+    // Store the end date and time
+    endFile << 1900 + ltm->tm_year << "-" << 1 + ltm->tm_mon << "-" << ltm->tm_mday << " ";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_hour << ":";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_min << ":";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_sec << " ";
+
+    //get the seconds since 1970-01-01 00:00:00 of the start of the auction
+    string startFilePath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
+    ifstream startFile(startFilePath);
+
+    //from the start file get the last element that is the first line
+    string startedSeconds;
+    string startFileData;
+    getline(startFile, startFileData);
+
+    //get the last element of the line
+    startedSeconds = startFileData.substr(startFileData.find_last_of(" ") + 1);
+
+    // Close the file
+    startFile.close();
+
+    // calculate the time the auction was active
+    int timeActive = now - stoi(startedSeconds);
+
+    // save time active
+    endFile << timeActive;
+
+    // Close the file
+    endFile.close();
+
+    return true;
+}
+
+int isOwnerAuction(string uid, string aid){
+  // Build the path to the hosted file
+  string hostedFilePath = "ASDIR/USERS/" + uid + "/HOSTED/" + aid + ".txt";
+
+  // Check if the file exists
+  return filesystem::exists(hostedFilePath);
+}
+
+int auctionIsFinished(string aid){
+  // Build the path to the auction file
+  string endendAuctionPath = "ASDIR/AUCTIONS/" + aid + "/END_" + aid + ".txt";
+
+  // Check if the file exists
+  return filesystem::exists(endendAuctionPath);
+}
 
 int auctionExists(string aid){
   // Build the path to the auction file

@@ -22,11 +22,10 @@ Open::Open(vector<string> args){
     }
   }
 
-  // TODO: verify args
-  // if (!Verify::isUID(this->uid) || !Verify::isPassword(this->password) || !Verify::isFileName(this->fName)){
-  //   printf("Invalid arguments\n");
-  //   throw exception();
-  // }
+  if (!Verify::isUID(this->uid) || !Verify::isPassword(this->password) || !Verify::isFileName(this->fName)){
+    printf("Invalid arguments\n");
+    throw exception();
+  }
 }
 
 void Open::execute(){

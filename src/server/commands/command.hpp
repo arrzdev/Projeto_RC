@@ -4,12 +4,12 @@
 #include <string>
 #include <stdexcept>
 
+// socket includes
 #include "../protocol/socket.hpp"
 #include "../protocol/udpSocket.hpp"
 #include "../protocol/tcpSocket.hpp"
 
 #include "../../common/verify.hpp"
-#include "../../common/fs.hpp"
 #include "../database.hpp"
 
 using namespace std;

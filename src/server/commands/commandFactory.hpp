@@ -16,6 +16,7 @@
 
 //include tcp commands
 #include "TCP/open.hpp"
+#include "TCP/close.hpp"
 
 
 #include <string>

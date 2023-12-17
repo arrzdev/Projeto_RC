@@ -4,6 +4,7 @@
 #include <string>
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <queue>
 #include <vector>
 #include <functional>
@@ -21,8 +22,12 @@ int passwordMatches(string uid, string password);
 void createLoginFile(string uid);
 
 string createAuction(string uid, string name, string startValue, string timeActive, string fName, string fData);
+bool closeAuction(string aid);
 
 int auctionExists(string aid);
+int isOwnerAuction(string uid, string aid);
+int auctionIsFinished(string aid);
+
 string getUserAuctions(string uid);
 
 string getAllAuctions();
