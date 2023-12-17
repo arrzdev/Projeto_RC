@@ -37,7 +37,10 @@ string getAuctionAsset(string aid);
 string getAuctionInfo(string aid);
 string getAuctionBidsInfo(string aid);
 string getAuctionEndInfo(string aid);
+int getAuctionTimeActive(string aid);
 
 string getUserBids(string uid);
+bool isHigherBid(string aid, string value);
+void placeBid(string uid, string aid, string value);
 
 #endif  

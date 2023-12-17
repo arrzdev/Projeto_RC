@@ -24,8 +24,6 @@ UdpClient::UdpClient(string ip, int port) {
 }
 
 int UdpClient::sendData(const string& data) {
-    if(this->verbose) printf("Sending data: %s", data.c_str());
-
     int n = sendto(this->sockfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->serverAddr, sizeof(this->serverAddr));
 
     if(n < 0) {
@@ -61,8 +59,6 @@ string UdpClient::receiveData() {
     buffer[n-1] = '\0';
 
     string dataReceived = string(buffer);
-
-    if(this->verbose) printf("Received data: %s\n", dataReceived.c_str());
 
     return dataReceived;
 }

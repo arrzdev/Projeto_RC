@@ -27,16 +27,6 @@ int Socket::getCommandSocketfd() {
   return this->commandSocketfd;
 }
 
-// getter for verbose
-bool Socket::getVerbose() {
-  return verbose;
-}
-
-// setter for verbose
-void Socket::setVerbose(bool verbose) {
-  this->verbose = verbose;
-}
-
 // getter for serverInfo
 struct sockaddr_in Socket::getServerInfo() {
   return serverInfo;

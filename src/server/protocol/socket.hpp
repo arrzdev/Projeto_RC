@@ -27,9 +27,6 @@ public:
   int getMonitorSocketfd();
   int getCommandSocketfd();
 
-  bool getVerbose();
-  void setVerbose(bool verbose);
-
   struct sockaddr_in getServerInfo();
   void setServerInfo(struct sockaddr_in serverInfo);
 

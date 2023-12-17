@@ -28,19 +28,14 @@ TcpSocket::TcpSocket(int port, bool verbose) {
     printf("Error binding socket to port %d\n", this->port);
   }
 
-  printf("Server started on port %d\n", this->port);
-
   // Start listening
   if (listen(this->monitorSocketfd, 5) < 0) {
     throw runtime_error("Failed to listen on socket");
   }
-
-  this->verbose = verbose;
 }
 
 // constructor for a TcpSocket that already exists
-TcpSocket::TcpSocket(int port, bool verbose, int socketfd, struct sockaddr_in serverInfo, struct sockaddr_in clientInfo)
-{
+TcpSocket::TcpSocket(int port, bool verbose, int socketfd, struct sockaddr_in serverInfo, struct sockaddr_in clientInfo){
   this->port = port;
   this->verbose = verbose;
   this->monitorSocketfd = socketfd;
@@ -75,12 +70,18 @@ string TcpSocket::receiveData() {
   }
 
   // If read timed out, return the data read so far
+  // Read completed successfully
   if (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
     //remove the \n
     dataReceived.pop_back();
 
     if (this->verbose) {
       printf("[TCP] Received data: %s\n", dataReceived.c_str());
+    }
+
+    if (dataReceived.length() > MAX_TCP_REPLY_SIZE) {
+      this->sendData(STATUS_ERR);
+      close(this->commandSocketfd);
     }
 
     return dataReceived;
@@ -101,6 +102,6 @@ void TcpSocket::sendData(string data) {
   }
 
   if (this->verbose) {
-    printf("Sent data: %s\n", data.c_str());
+    printf("[PROTOCOL] Sent data: %s\n", data.c_str());
   }
 }

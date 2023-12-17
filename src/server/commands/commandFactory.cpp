@@ -47,6 +47,10 @@ Command* CommandFactory::createCommand(string protocolMessage) {
       printf("Creating show asset command\n");
       return new ShowAsset(arguments);
     }
+    else if (command == "BID"){
+      printf("Creating bid command\n");
+      return new Bid(arguments);
+    }
   } catch(const std::exception& e ) {
     printf("Command constructor failed because of validations\n");
     return nullptr;

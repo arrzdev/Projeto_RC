@@ -24,7 +24,7 @@ void ShowRecord::receive() {
         IShowRecord showRecord = parser.parseShowRecord();
         printf("%s started auction at %s %s with initial value of %s\n", showRecord.hostId.c_str(), showRecord.startDate.c_str(), showRecord.startTime.c_str(), showRecord.startValue.c_str());
         printf("Asset frame: %s\n", showRecord.assetFrame.c_str());
-        printf("Auction %s has %lu bids\n", this->auctionId.c_str(), showRecord.bids.size());
+        printf("List of the last %lu bids of %s auction\n", showRecord.bids.size(), this->auctionId.c_str());
 
         for(IBid bid : showRecord.bids) {
             printf("Bidder %s: bid value %s at %s %s\n", bid.bidderId.c_str(), bid.value.c_str(), bid.date.c_str(), bid.time.c_str());

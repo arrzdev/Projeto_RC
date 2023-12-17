@@ -18,6 +18,7 @@
 #include "TCP/open.hpp"
 #include "TCP/close.hpp"
 #include "TCP/showasset.hpp"
+#include "TCP/bid.hpp"
 
 
 #include <string>

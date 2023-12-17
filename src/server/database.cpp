@@ -94,7 +94,7 @@ string getUserBids(string uid){
     string aid = aid_filename.substr(0, aid_filename.length() - 4); // remove .txt
     
     // Get the auction state
-    int state = getAuctionState(aid);
+    int state = !auctionIsFinished(aid);
 
     // Format bid message and add it to the string
     bids += " " + aid + " " + to_string(state);
@@ -112,7 +112,7 @@ string getUserAuctions(string uid){
     // Get the auction state
     string aid_filename = entry.path().filename(); // remove .txt
     string aid = aid_filename.substr(0, aid_filename.length() - 4);
-    int state = getAuctionState(aid);
+    int state = !auctionIsFinished(aid);
 
     // Format auction message and add it to the string
     auctions += " " + aid + " " + to_string(state);
@@ -131,7 +131,7 @@ string getAllAuctions(){
     string aid = entry.path().filename(); // remove .txt
     
     // Get the auction state
-    int state = getAuctionState(aid);
+    int state = !auctionIsFinished(aid);
 
     // Format auction message and add it to the string
     auctions += " " + aid + " " + to_string(state);
@@ -144,6 +144,9 @@ string createAuction(string uid, string name, string startValue, string timeActi
   try {
   // Build the path to the auctions directory
   string auctionsDirPath = "ASDIR/AUCTIONS";
+
+  // Create the auctions directory if it doesn't exist
+  filesystem::create_directories(auctionsDirPath);
 
   //get the current auctions aid's and increment by one
   int aid = 0;
@@ -245,23 +248,7 @@ bool closeAuction(string aid){
     endFile << std::setw(2) << std::setfill('0') << ltm->tm_min << ":";
     endFile << std::setw(2) << std::setfill('0') << ltm->tm_sec << " ";
 
-    //get the seconds since 1970-01-01 00:00:00 of the start of the auction
-    string startFilePath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
-    ifstream startFile(startFilePath);
-
-    //from the start file get the last element that is the first line
-    string startedSeconds;
-    string startFileData;
-    getline(startFile, startFileData);
-
-    //get the last element of the line
-    startedSeconds = startFileData.substr(startFileData.find_last_of(" ") + 1);
-
-    // Close the file
-    startFile.close();
-
-    // calculate the time the auction was active
-    int timeActive = now - stoi(startedSeconds);
+    int timeActive = getAuctionTimeActive(aid);
 
     // save time active
     endFile << timeActive;
@@ -288,8 +275,50 @@ int auctionIsFinished(string aid){
   // Build the path to the auction file
   string endendAuctionPath = "ASDIR/AUCTIONS/" + aid + "/END_" + aid + ".txt";
 
-  // Check if the file exists
-  return filesystem::exists(endendAuctionPath);
+  // auction has ended
+  if (filesystem::exists(endendAuctionPath)){
+    return 1;
+  }
+
+  string startAuctionPath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
+
+  // Get auction info
+  ifstream file(startAuctionPath);
+
+  string uid, name, asset_fname, start_value, timeactive, start_date, start_time, start_fulltime;
+  file >> uid >> name >> asset_fname >> start_value >> timeactive >> start_date >> start_time >> start_fulltime;
+
+  // Close the file
+  file.close();
+
+  // Get the current date and time
+  time_t now = time(0);
+  time_t endedTime = stoi(start_fulltime) + stoi(timeactive);
+
+  // check if time is up
+  if (endedTime < now)
+  {
+    // create the end file
+    ofstream endFile(endendAuctionPath);
+
+    tm *ltm = localtime(&endedTime);
+
+    // Store the end date and time
+    endFile << 1900 + ltm->tm_year << "-" << 1 + ltm->tm_mon << "-" << ltm->tm_mday << " ";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_hour << ":";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_min << ":";
+    endFile << std::setw(2) << std::setfill('0') << ltm->tm_sec << " ";
+
+    // store the time active, that is equal to timeActive in the start file
+    endFile << timeactive;
+
+    // Close the file
+    endFile.close();
+
+    return 1; // auction has ended
+  }
+
+  return 0; // auction has not ended
 }
 
 int auctionExists(string aid){
@@ -297,12 +326,6 @@ int auctionExists(string aid){
   string startAuctionPath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
   
   return filesystem::exists(startAuctionPath);
-}
-
-int getAuctionState(string aid){
-  // Build the path to the auction file
-  string endendAuctionPath = "ASDIR/AUCTIONS/" + aid + "/" + "END_" + aid + ".txt";
-  return !filesystem::exists(endendAuctionPath);
 }
 
 string getAuctionAsset(string aid){
@@ -365,7 +388,7 @@ string getAuctionBidsInfo(string aid){
   string bids = "";
 
   // Create a priority queue to store the top 50 bids
-  priority_queue<int, vector<int>, less<int>> topBids;
+  priority_queue<int, vector<int>, greater<int>> topBids;
   for (const auto &entry : filesystem::directory_iterator(bidsDirPath)){
     // Get the bid value from the file name
     string filename = entry.path().filename().string();
@@ -388,9 +411,6 @@ string getAuctionBidsInfo(string aid){
     topBids.pop();
   }
 
-  // Reverse the vector to sort it in ascending order
-  reverse(sortedBids.begin(), sortedBids.end());
-
   // Process the bids in the order of bid value
   for (const auto &bidValue : sortedBids){
     // Convert the bid value to a string with 6 digits and leading zeros
@@ -399,7 +419,9 @@ string getAuctionBidsInfo(string aid){
     string bidValueStr = ss.str();
 
     // Open the corresponding file
-    ifstream file(bidsDirPath + "/" + bidValueStr + ".txt");
+    string bidFilePath = bidsDirPath + "/" + bidValueStr + ".txt";
+
+    ifstream file(bidFilePath);
 
     // TODO: throw exception or just continue?
     if (!file){ throw runtime_error("Could not open file"); }
@@ -445,4 +467,111 @@ string getAuctionEndInfo(string aid){
   endInfo = " E " + endData;
 
   return endInfo;
+}
+
+int getAuctionTimeActive(string aid){
+  // get the seconds since 1970-01-01 00:00:00 of the start of the auction
+  string startFilePath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
+  ifstream startFile(startFilePath);
+
+  // from the start file get the last element that is the first line
+  string startedSeconds;
+  string startFileData;
+  getline(startFile, startFileData);
+
+  // get the last element of the line
+  startedSeconds = startFileData.substr(startFileData.find_last_of(" ") + 1);
+
+  // Close the file
+  startFile.close();
+
+  // get the current time
+  time_t now = time(0);
+
+  // calculate the time the auction was active
+  return now - stoi(startedSeconds);
+}
+
+bool isHigherBid(string aid, string value){
+  // get the start value of the auction
+  string startFilePath = "ASDIR/AUCTIONS/" + aid + "/START_" + aid + ".txt";
+  ifstream startFile(startFilePath);
+
+  // from the start file get the 4th element that is the start value
+  string startValue;
+  string startFileData;
+  getline(startFile, startFileData);
+
+  // Close the file
+  startFile.close();
+
+  // get the 4th element of the line
+  startValue = startFileData.substr(startFileData.find(" ", startFileData.find(" ", startFileData.find(" ") + 1) + 1) + 1);
+
+  // if the value is lower than the start value return false
+  if (stoi(value) <= stoi(startValue)){
+    return false;
+  }
+
+  // Build the path to the bids directory
+  string bidsDirPath = "ASDIR/AUCTIONS/" + aid + "/BIDS";
+
+  // Get the highest bid
+  string highestBid;
+  for (const auto &entry : filesystem::directory_iterator(bidsDirPath)){
+    highestBid = entry.path().filename().string();
+  }
+
+  // If there are no bids, return true
+  if (highestBid.empty()){
+    return true;
+  }
+
+  // Get the bid value from the file name
+  int highestBidValue = stoi(highestBid.substr(0, highestBid.find(".txt")));
+
+  // Compare the bid value to the value received
+  return highestBidValue < stoi(value);
+}
+
+void placeBid(string uid, string aid, string value){
+  //add leading zeros to the value, VVVVVV
+  stringstream ss;
+  ss << setw(6) << setfill('0') << value;
+  value = ss.str();
+
+  //create the bid file
+  string bidFilePath = "ASDIR/AUCTIONS/" + aid + "/BIDS/" + value + ".txt";
+
+  //create the file
+  ofstream bidFile(bidFilePath);
+
+  // store inside the file the following format: ID bid_value bid_datetime bid_sec_time
+  // get the current date and time
+  time_t now = time(0);
+  tm *ltm = localtime(&now);
+
+  // store the bid data
+  bidFile << uid << " " << value << " ";
+  bidFile << 1900 + ltm->tm_year << "-" << 1 + ltm->tm_mon << "-" << ltm->tm_mday << " ";
+  bidFile << std::setw(2) << std::setfill('0') << ltm->tm_hour << ":";
+  bidFile << std::setw(2) << std::setfill('0') << ltm->tm_min << ":";
+  bidFile << std::setw(2) << std::setfill('0') << ltm->tm_sec << " ";
+
+  // get auction time active
+  int timeActive = getAuctionTimeActive(aid);
+
+  // store the bid time active
+  bidFile << timeActive;
+
+  // Close the file
+  bidFile.close();
+
+  // Create a aid.txt file inside the bidded directory of the user
+  string biddedDirPath = "ASDIR/USERS/" + uid + "/BIDDED";
+  string biddedFilePath = biddedDirPath + "/" + aid + ".txt";
+  ofstream biddedFile(biddedFilePath);
+
+  // Close the file
+  biddedFile.close();
 }

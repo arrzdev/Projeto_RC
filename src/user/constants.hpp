@@ -7,7 +7,7 @@
 #define IP_FLAG "-n"
 #define PORT_FLAG "-p"
 #define DEFAULT_IP "127.0.0.1"
-#define DEFAULT_PORT 58000
+#define DEFAULT_PORT 58098
 
 #define UDP_VERBOSE false
 #define TCP_VERBOSE false

@@ -22,7 +22,7 @@ Open::Open(vector<string> args){
     }
   }
 
-  if (!Verify::isUID(this->uid) || !Verify::isPassword(this->password) || !Verify::isFileName(this->fName)){
+  if (!Verify::isUID(this->uid) || !Verify::isPassword(this->password) || !Verify::isFileName(this->fName) || !Verify::isAuctionDuration(this->timeActive) || Verify::isAuctionName(this->name) || !Verify::isAuctionStartValue(this->startValue)){
     printf("Invalid arguments\n");
     throw exception();
   }

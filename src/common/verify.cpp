@@ -106,6 +106,10 @@ bool Verify::isAuctionDuration(string duration) {
         }
     }
 
+    if (stoi(duration) <= 0){
+      return false;
+    }
+
     return true;
 }
 

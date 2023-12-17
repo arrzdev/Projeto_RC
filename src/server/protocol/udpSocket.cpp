@@ -4,10 +4,11 @@
 UdpSocket::UdpSocket(int port, bool verbose) {
   this->port = port;
   this->verbose = verbose;
+
   this->monitorSocketfd = socket(AF_INET, SOCK_DGRAM, 0); //creates a new file descriptor for the socket
   this->commandSocketfd = this->monitorSocketfd; //for UDP, the command socket is the same as the monitor socket
   
-  if (this->monitorSocketfd < 0 && this->verbose) {
+  if (this->monitorSocketfd < 0) {
     printf("Error creating socket\n");
   }
   
@@ -20,8 +21,6 @@ UdpSocket::UdpSocket(int port, bool verbose) {
     // TODO error handling
     printf("Error binding socket to port %d\n", this->port);
   }
-
-  printf("Server started on port %d\n", this->port);
 }
 
 // constructor for a UdpSocket that already exists
@@ -59,10 +58,15 @@ string UdpSocket::receiveData() {
 }
 
 void UdpSocket::sendData(string data) {
+
   int n = sendto(this->commandSocketfd, data.c_str(), data.length(), 0, (struct sockaddr*) &this->clientInfo, sizeof(this->clientInfo));
 
   if (n < 0) {
     // TODO error handling
     printf("Error sending data\n");
+  }
+
+  if (this->verbose){
+    printf("[PROTOCOL] Sent data: %s\n", data.c_str());
   }
 }
