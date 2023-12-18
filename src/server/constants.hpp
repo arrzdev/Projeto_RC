@@ -4,7 +4,7 @@
 #define PORT_FLAG "-p"
 #define VERBOSE_FLAG "-v"
 
-#define DEFAULT_PORT 58000
+#define DEFAULT_PORT 58098
 #define DEFAULT_VERBOSE false
 
 #define MAX_AUCTIONS 999

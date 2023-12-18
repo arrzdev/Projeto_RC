@@ -14,7 +14,7 @@ void Command::setupSocketConnection(int port, bool verbose, int socketfd, struct
 
 void Command::send(string status){
   string response = string(this->returnCode) + " " + status + "\n";
-  printf("[PROTOCOL] Sending response: %s", response.c_str());
+
   this->socket->sendData(response);
 
   if (this->socketType == "TCP"){ //tcp commands have a unique socket connection for communication
